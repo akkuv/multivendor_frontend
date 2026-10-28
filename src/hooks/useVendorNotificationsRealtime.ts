@@ -1,0 +1,66 @@
+import { useEffect } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
+import { useAuthStore } from '@/store/authStore'
+import { getEcho, isRealtimeConfigured } from '@/lib/reverb'
+import { toast } from '@/lib/toast'
+import { vendorNotificationTarget } from '@/lib/notifications'
+import type { NotificationCreatedEvent } from '@/hooks/useAdminNotificationsRealtime'
+
+const VENDOR_NOTIFICATIONS_KEY = ['vendor', 'notifications'] as const
+const VENDOR_NOTIFICATIONS_UNREAD_KEY = ['vendor', 'notifications', 'unread'] as const
+
+/**
+ * Keep the vendor panel's notification bell live.
+ *
+ * Subscribes to the signed-in vendor's own private channel and, whenever a
+ * notification lands, pops a toast on whatever vendor page is open and
+ * invalidates the bell queries so the badge updates immediately instead of
+ * waiting for the 15s poll. The backend is the source of truth: the event only
+ * triggers a refetch, it never renders directly.
+ */
+export function useVendorNotificationsRealtime(): void {
+  const { t } = useTranslation()
+  const queryClient = useQueryClient()
+  const user = useAuthStore((state) => state.user)
+  const token = useAuthStore((state) => state.token)
+
+  useEffect(() => {
+    if (!user?.id || !token || !isRealtimeConfigured()) {
+      return
+    }
+
+    let echo: ReturnType<typeof getEcho>
+    try {
+      echo = getEcho(token)
+    } catch {
+      return
+    }
+
+    const channelName = `App.Models.User.${user.id}`
+    const channel = echo.private(channelName)
+
+    channel.listen('.notification.created', (event: NotificationCreatedEvent) => {
+      const target = vendorNotificationTarget({ type: event.type, meta: event.meta })
+
+      toast({
+        title: event.title ?? t('Notification'),
+        description: event.message ?? undefined,
+        duration: 6000,
+        ...(target ? { action: { label: t(target.label), to: target.to } } : {}),
+      })
+
+      queryClient.invalidateQueries({ queryKey: VENDOR_NOTIFICATIONS_KEY })
+      queryClient.invalidateQueries({ queryKey: VENDOR_NOTIFICATIONS_UNREAD_KEY })
+    })
+
+    return () => {
+      // Leaving the channel rather than disconnecting: the same socket is
+      // shared with the support chat, so tearing it down would break both.
+      echo.leave(channelName)
+    }
+    // The listener closure only depends on the signed-in identity; `t` and
+    // `queryClient` are stable across renders.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id, token])
+}
