@@ -37,10 +37,12 @@ function realtimeConfig(token: string): RealtimeConfig {
   // Prefer the explicitly configured host, but fall back to the API origin's host
   // (and finally the current page host) so realtime keeps working when the .env
   // host is stale or points at localhost from another device.
+  const LIVE_REVERB_HOST = 'mauryaapi.expertshub.in'
   const apiRoot = (import.meta.env.VITE_API_BASE_URL ?? '').replace(/\/api\/v1\/?$/, '')
   const pageHost = typeof window !== 'undefined' ? window.location.hostname : ''
   const pagePort = typeof window !== 'undefined' ? window.location.port : ''
   let host = import.meta.env.VITE_REVERB_HOST
+  if (!host && import.meta.env.PROD) host = LIVE_REVERB_HOST
   // In dev the Vite proxy forwards /app to Reverb on the same origin, so use
   // the page host/port. Otherwise (prod or explicitly configured) use config.
   const useSameOrigin =
