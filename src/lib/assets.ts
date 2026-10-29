@@ -3,7 +3,34 @@
  * the backend stores or returns must be resolved against the API origin
  * instead of the frontend origin.
  */
-const ENV_ORIGIN = (import.meta.env.VITE_ASSET_BASE_URL ?? (import.meta.env.PROD ? 'https://mauryaapi.expertshub.in' : '')).replace(/\/+$/, '')
+function resolveOrigin(): string {
+  const configured = import.meta.env.VITE_ASSET_BASE_URL
+  if (configured) {
+    try {
+      const url = new URL(configured)
+      const pageHost = typeof window !== 'undefined' ? window.location.hostname : ''
+      const isStale =
+        (url.hostname === 'localhost' || url.hostname === '127.0.0.1' || /^\d+\.\d+\.\d+\.\d+$/.test(url.hostname)) &&
+        pageHost &&
+        pageHost !== 'localhost' &&
+        pageHost !== '127.0.0.1' &&
+        url.hostname !== pageHost
+      if (!isStale) return configured.replace(/\/+$/, '')
+    } catch {
+      /* fall through */
+    }
+  }
+  if (import.meta.env.PROD) {
+    return 'https://mauryaapi.expertshub.in'
+  }
+  // Dev: derive from the page host so images resolve on any device/network.
+  if (typeof window !== 'undefined' && window.location.hostname) {
+    return `${window.location.protocol}//${window.location.hostname}:8001`
+  }
+  return ''
+}
+
+const ENV_ORIGIN = resolveOrigin()
 
 /**
  * Origin of the API the browser is actually talking to right now. The backend
