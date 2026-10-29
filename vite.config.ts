@@ -24,27 +24,6 @@ export default defineConfig(({ mode }) => {
       host: env.VITE_DEV_HOST ?? "0.0.0.0",
       port,
       strictPort: true,
-      // Proxy API + broadcasting to the Laravel backend so the frontend and
-      // backend share one origin in dev. This keeps API calls, auth and the
-      // Reverb websocket working for every device on the LAN without having to
-      // keep VITE_API_BASE_URL in sync with the machine's (changing) IP.
-      proxy: {
-        '/api': {
-          target: env.VITE_BACKEND_URL ?? 'http://127.0.0.1:8001',
-          changeOrigin: true,
-        },
-        '/broadcasting': {
-          target: env.VITE_BACKEND_URL ?? 'http://127.0.0.1:8001',
-          changeOrigin: true,
-        },
-        // Reverb speaks the Pusher protocol over /app/{key}; proxying it
-        // through Vite keeps realtime working for every device on the LAN.
-        '/app': {
-          target: `http://127.0.0.1:${env.VITE_REVERB_PORT ?? 8080}`,
-          changeOrigin: true,
-          ws: true,
-        },
-      },
       // Vite blocks requests whose Host header it does not recognise. Allow the
       // LAN addresses so a phone loading http://192.168.1.40:5174 is not refused.
       allowedHosts: true,
