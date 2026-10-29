@@ -4,10 +4,15 @@ import { TOKEN_KEY, useAuthStore } from '@/store/authStore'
 
 function resolveApiBase(): string {
   const configured = import.meta.env.VITE_API_BASE_URL
-  // Relative paths (e.g. /api/v1) are used verbatim so the Vite dev proxy
-  // (same origin) handles routing — no IP/port mismatch across devices.
+  const LIVE_API_BASE = 'https://mauryaapi.expertshub.in/api/v1'
+  // Relative paths (e.g. /api/v1) are only valid in dev. In production there
+  // is no proxy, so fall back to the live backend origin.
   if (configured && configured.startsWith('/')) {
+    if (import.meta.env.PROD) return LIVE_API_BASE
     return configured
+  }
+  if (!configured) {
+    return LIVE_API_BASE
   }
   // If the configured host is missing, localhost, or a stale IP that doesn't
   // match the origin the page was served from, fall back to the page host so the

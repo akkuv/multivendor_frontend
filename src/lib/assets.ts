@@ -3,7 +3,7 @@
  * the backend stores or returns must be resolved against the API origin
  * instead of the frontend origin.
  */
-const ENV_ORIGIN = (import.meta.env.VITE_ASSET_BASE_URL ?? '').replace(/\/+$/, '')
+const ENV_ORIGIN = (import.meta.env.VITE_ASSET_BASE_URL ?? (import.meta.env.PROD ? 'https://mauryaapi.expertshub.in' : '')).replace(/\/+$/, '')
 
 /**
  * Origin of the API the browser is actually talking to right now. The backend
