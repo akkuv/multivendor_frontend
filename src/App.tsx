@@ -101,6 +101,11 @@ function appRole(): 'admin' | 'vendor' | 'customer' | 'all' {
   }
   if (typeof window !== 'undefined') {
     const host = window.location.hostname.toLowerCase()
+    // On localhost (and any non-subdomain host) show everything so all panels
+    // stay reachable during local development.
+    if (host === 'localhost' || host === '127.0.0.1' || !host.includes('.')) {
+      return 'all'
+    }
     if (host.startsWith('admin.')) return 'admin'
     if (host.startsWith('vendor.')) return 'vendor'
   }
