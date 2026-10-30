@@ -194,7 +194,7 @@ export function AdminWishlistInsightsPage() {
               </tr>
             </thead>
             <tbody>
-              {list.data.data.map((row: any) => (
+              {list.data.map((row: any) => (
                 <tr key={row.id} className="border-t">
                   <td className="px-4 py-3">
                     <button className="text-left hover:underline" onClick={() => setDetailUserId(row.customer?.id)}>
