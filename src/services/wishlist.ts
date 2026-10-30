@@ -56,3 +56,50 @@ export async function moveWishlistItemToCart(product: Product, payload: MoveToCa
   })
   return res.data
 }
+
+// ---- Admin wishlist insights ----
+export interface WishlistInsightStats {
+  total_entries: number
+  active_entries: number
+  removed_entries: number
+  customers_with_wishlist: number
+  unique_products: number
+  most_wishlisted: Array<{ product_id: number; wishlist_count: number; product?: any }>
+  recent: Array<any>
+}
+
+export async function getWishlistInsightStats(): Promise<WishlistInsightStats> {
+  const res = await api.get<ApiResponse<WishlistInsightStats>>('/admin/wishlist/insights/stats')
+  return res.data
+}
+
+export async function getWishlistInsightList(params: Record<string, unknown> = {}): Promise<Paginated<any>> {
+  const res = await api.get<ApiResponse<Paginated<any>>>('/admin/wishlist/insights', { params })
+  return res.data
+}
+
+export async function getCustomerWishlistDetail(userId: number): Promise<any> {
+  const res = await api.get<ApiResponse<any>>(`/admin/wishlist/insights/customers/${userId}`)
+  return res.data
+}
+
+export async function getWishlistRecommendations(productId: number): Promise<any[]> {
+  const res = await api.get<ApiResponse<any[]>>(`/admin/wishlist/insights/recommendations/${productId}`)
+  return res.data
+}
+
+export async function sendWishlistSuggestion(payload: {
+  customer_user_id: number
+  product_id: number
+  recommended_product_ids: number[]
+  message?: string
+  channel?: string
+}): Promise<{ suggestion: any; delivery_status: string }> {
+  const res = await api.post<ApiResponse<{ suggestion: any; delivery_status: string }>>('/admin/wishlist/insights/suggest', payload)
+  return res.data
+}
+
+export async function getWishlistSuggestionHistory(params: Record<string, unknown> = {}): Promise<Paginated<any>> {
+  const res = await api.get<ApiResponse<Paginated<any>>>('/admin/wishlist/insights/suggestions', { params })
+  return res.data
+}

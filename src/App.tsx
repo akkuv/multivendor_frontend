@@ -79,6 +79,7 @@ import { AdminWalletPage } from '@/features/website/pages/admin/AdminWalletPage'
 import { AdminReturnsPage } from '@/features/website/pages/admin/AdminReturnsPage'
 import { AdminPayoutsPage } from '@/features/website/pages/admin/AdminPayoutsPage'
 import { AdminReviewsPage } from '@/features/website/pages/admin/AdminReviewsPage'
+import { AdminWishlistInsightsPage } from '@/features/website/pages/admin/AdminWishlistInsightsPage'
 import { AdminVendorReviewsPage } from '@/features/website/pages/admin/AdminVendorReviewsPage'
 import { AdminQuestionsPage } from '@/features/website/pages/admin/AdminQuestionsPage'
 import { AdminHomeManagerPage } from '@/features/website/pages/admin/AdminHomeManagerPage'
@@ -251,6 +252,7 @@ export default function App() {
   <Route path="payouts"    element={<AdminPayoutsPage />} />
   <Route path="returns"    element={<AdminReturnsPage />} />
   <Route path="reviews"    element={<AdminReviewsPage />} />
+  <Route path="wishlist-insights" element={<AdminWishlistInsightsPage />} />
   <Route path="vendor-reviews" element={<AdminVendorReviewsPage />} />
   <Route path="questions" element={<AdminQuestionsPage />} />
   <Route path="support" element={<AdminSupportPage />} />
