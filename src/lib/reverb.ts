@@ -110,6 +110,11 @@ export function getEcho(token?: string | null): Echo<'reverb'> {
 }
 
 export function isRealtimeConfigured(): boolean {
+  // Allow realtime to be explicitly disabled (e.g. on deployments where the
+  // Reverb websocket server is not running) to avoid noisy console errors.
+  if (import.meta.env.VITE_REALTIME_ENABLED === 'false') {
+    return false
+  }
   return Boolean(import.meta.env.VITE_REVERB_HOST && import.meta.env.VITE_REVERB_APP_KEY)
 }
 
