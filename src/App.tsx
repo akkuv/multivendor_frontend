@@ -95,19 +95,19 @@ import { ContactPage } from '@/features/website/pages/ContactPage'
 // Determine which "app" this build serves. Set VITE_APP_ROLE=admin|vendor|customer
 // per deployment (or rely on the subdomain: admin.* / vendor.*).
 function appRole(): 'admin' | 'vendor' | 'customer' | 'all' {
-  const envRole = (import.meta.env.VITE_APP_ROLE ?? '').toLowerCase()
-  if (envRole === 'admin' || envRole === 'vendor' || envRole === 'customer') {
-    return envRole
-  }
   if (typeof window !== 'undefined') {
     const host = window.location.hostname.toLowerCase()
     // On localhost (and any non-subdomain host) show everything so all panels
-    // stay reachable during local development.
+    // stay reachable during local development, regardless of VITE_APP_ROLE.
     if (host === 'localhost' || host === '127.0.0.1' || !host.includes('.')) {
       return 'all'
     }
     if (host.startsWith('admin.')) return 'admin'
     if (host.startsWith('vendor.')) return 'vendor'
+  }
+  const envRole = (import.meta.env.VITE_APP_ROLE ?? '').toLowerCase()
+  if (envRole === 'admin' || envRole === 'vendor' || envRole === 'customer') {
+    return envRole
   }
   return 'all'
 }
