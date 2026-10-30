@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import { StoreLayout } from '@/layouts/StoreLayout'
 import { VendorLayout } from '@/layouts/VendorLayout'
 import { AdminLayout } from '@/layouts/AdminLayout'
@@ -91,10 +91,31 @@ import { NotFoundPage } from '@/features/website/pages/NotFoundPage'
 import { HelpPage } from '@/features/website/pages/HelpPage'
 import { ContactPage } from '@/features/website/pages/ContactPage'
 
+// Determine which "app" this build serves. Set VITE_APP_ROLE=admin|vendor|customer
+// per deployment (or rely on the subdomain: admin.* / vendor.*).
+function appRole(): 'admin' | 'vendor' | 'customer' | 'all' {
+  const envRole = (import.meta.env.VITE_APP_ROLE ?? '').toLowerCase()
+  if (envRole === 'admin' || envRole === 'vendor' || envRole === 'customer') {
+    return envRole
+  }
+  if (typeof window !== 'undefined') {
+    const host = window.location.hostname.toLowerCase()
+    if (host.startsWith('admin.')) return 'admin'
+    if (host.startsWith('vendor.')) return 'vendor'
+  }
+  return 'all'
+}
+
 export default function App() {
+  const role = appRole()
+  const showStore = role === 'all' || role === 'customer'
+  const showVendor = role === 'all' || role === 'vendor'
+  const showAdmin = role === 'all' || role === 'admin'
+
   return (
     <Routes>
-      <Route element={<StoreLayout />}>
+      {showStore && (
+        <Route element={<StoreLayout />}>
         <Route index element={<HomePage />} />
         <Route path="shop" element={<ShopPage />} />
         <Route path="category/:slug" element={<CategoryPage />} />
@@ -163,7 +184,9 @@ export default function App() {
         {/* Admin-created pages live at the path the admin chooses (any depth). */}
         <Route path="*" element={<CustomPageView />} />
       </Route>
+      )}
 
+      {showVendor && (
       <Route
         path="vendor"
         element={
@@ -190,7 +213,9 @@ export default function App() {
         <Route path="product-queries" element={<VendorProductQueriesPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
+      )}
 
+      {showAdmin && (
       <Route
         path="admin"
         element={
@@ -238,6 +263,15 @@ export default function App() {
   <Route path="reports" element={<AdminReportsPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
+      )}
+
+      {/* Shared auth route, available on every subdomain. */}
+      <Route path="login" element={<LoginPage />} />
+      <Route path="forgot-password" element={<ForgotPasswordPage />} />
+
+      {/* Root redirect for panel subdomains. */}
+      {role === 'admin' && <Route index element={<Navigate to="/admin" replace />} />}
+      {role === 'vendor' && <Route index element={<Navigate to="/vendor" replace />} />}
 
     </Routes>
   )
