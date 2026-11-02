@@ -137,7 +137,14 @@ export function DepartmentsBar({
 
   const allTop = categories.filter((category) => category.is_active !== false)
   const selected = settings.category_ids ?? []
-  const shown = selected.length > 0 ? allTop.filter((category) => selected.includes(category.id)) : allTop
+  // Respect the order chosen by the admin in the settings panel (category_ids
+  // is an ordered list, not just a set).
+  const shown =
+    selected.length > 0
+      ? selected
+          .map((id) => allTop.find((category) => category.id === id))
+          .filter((category): category is Category => Boolean(category))
+      : allTop
 
   const activeDepartment = typeof openPanel === 'number' ? shown.find((category) => category.id === openPanel) : undefined
   const departmentChildren = activeDepartment?.children ?? []

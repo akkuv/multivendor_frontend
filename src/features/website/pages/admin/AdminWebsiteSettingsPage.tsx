@@ -161,7 +161,33 @@ function LinkEditorRow({
                     {t('Showing all top-level categories automatically (including any new ones).')}
                   </p>
                 )}
-                <div className="max-h-48 space-y-0.5 overflow-y-auto rounded-lg border p-2">
+                {scope?.category_ids && scope.category_ids.length > 0 && (
+                 <div className="mb-2 space-y-1 rounded-lg border p-2">
+                   <p className="px-1 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">{t('Order')}</p>
+                   {scope.category_ids.map((id, index) => {
+                     const c = categories.find((x) => x.id === id)
+                     if (!c) return null
+                     return (
+                       <div key={id} className="flex items-center gap-2 rounded-md bg-muted/40 px-2 py-1.5 text-sm">
+                         <span className="w-5 text-center text-xs text-muted-foreground">{index + 1}</span>
+                         <span className="flex-1 truncate">{c.name}</span>
+                         <Button type="button" variant="ghost" size="icon" className="h-6 w-6" disabled={index === 0}
+                           onClick={() => { const next = [...scope.category_ids!]; [next[index - 1], next[index]] = [next[index], next[index - 1]]; patchScope({ category_ids: next }) }}>
+                           <ArrowUp className="h-3.5 w-3.5" />
+                         </Button>
+                         <Button type="button" variant="ghost" size="icon" className="h-6 w-6" disabled={index === scope.category_ids!.length - 1}
+                           onClick={() => { const next = [...scope.category_ids!]; [next[index], next[index + 1]] = [next[index + 1], next[index]]; patchScope({ category_ids: next }) }}>
+                           <ArrowDown className="h-3.5 w-3.5" />
+                         </Button>
+                         <Button type="button" variant="ghost" size="icon" className="h-6 w-6 text-destructive" onClick={() => toggleCategory(id)}>
+                           <Trash2 className="h-3.5 w-3.5" />
+                         </Button>
+                       </div>
+                     )
+                   })}
+                 </div>
+               )}
+               <div className="max-h-48 space-y-0.5 overflow-y-auto rounded-lg border p-2">
                   {categories.length === 0 ? (
                     <p className="px-2 py-3 text-center text-sm text-muted-foreground">{t('No categories yet.')}</p>
                   ) : (
@@ -579,6 +605,32 @@ export function AdminWebsiteSettingsPage() {
                 <p className="text-xs text-muted-foreground">
                   Showing all top-level categories automatically (including any new ones).
                 </p>
+              )}
+              {departments?.category_ids && departments.category_ids.length > 0 && (
+                <div className="mb-2 space-y-1 rounded-lg border p-2">
+                  <p className="px-1 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">{t('Order')}</p>
+                  {departments.category_ids.map((id, index) => {
+                    const c = categories.find((x) => x.id === id)
+                    if (!c) return null
+                    return (
+                      <div key={id} className="flex items-center gap-2 rounded-md bg-muted/40 px-2 py-1.5 text-sm">
+                        <span className="w-5 text-center text-xs text-muted-foreground">{index + 1}</span>
+                        <span className="flex-1 truncate">{c.name}</span>
+                        <Button type="button" variant="ghost" size="icon" className="h-6 w-6" disabled={index === 0}
+                          onClick={() => { const next = [...departments.category_ids!]; [next[index - 1], next[index]] = [next[index], next[index - 1]]; patchDepartments({ category_ids: next }) }}>
+                          <ArrowUp className="h-3.5 w-3.5" />
+                        </Button>
+                        <Button type="button" variant="ghost" size="icon" className="h-6 w-6" disabled={index === departments.category_ids!.length - 1}
+                          onClick={() => { const next = [...departments.category_ids!]; [next[index], next[index + 1]] = [next[index + 1], next[index]]; patchDepartments({ category_ids: next }) }}>
+                          <ArrowDown className="h-3.5 w-3.5" />
+                        </Button>
+                        <Button type="button" variant="ghost" size="icon" className="h-6 w-6 text-destructive" onClick={() => toggleCategory(id)}>
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </Button>
+                      </div>
+                    )
+                  })}
+                </div>
               )}
               <div className="max-h-48 space-y-0.5 overflow-y-auto rounded-lg border p-2">
                 {categories.length === 0 ? (
