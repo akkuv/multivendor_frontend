@@ -88,7 +88,11 @@ export function MobileMenu({
   }
 
   const activeLink = tabs.find((link) => `${link.label}-${link.url}` === activeTabKey) ?? tabs[0]
-  const activeScope = activeLink ? resolveLinkDepartments(departments, activeLink) : null
+  const activeScope = activeLink
+    ? resolveLinkDepartments(departments, activeLink)
+    : departments.enabled
+      ? departments
+      : null
   const scopedCategories =
     activeScope && activeScope.category_ids && activeScope.category_ids.length > 0
       ? allTop.filter((category) => activeScope.category_ids!.includes(category.id))
