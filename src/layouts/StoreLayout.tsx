@@ -446,7 +446,9 @@ export function StoreLayout() {
         <div className="px-4 pb-3 md:hidden">
           <SearchField onSearch={handleSearch} />
         </div>
-        <DepartmentsBar departments={navbar.departments} links={navbar.links} />
+        <div className="hidden md:block">
+          <DepartmentsBar departments={navbar.departments} links={navbar.links} />
+        </div>
       </header>
 
       <main className="flex-1">

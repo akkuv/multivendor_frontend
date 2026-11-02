@@ -5,6 +5,7 @@ import { useCategories } from '@/hooks/useCategories'
 import { resolveLinkDepartments, useDepartmentsScope } from '@/hooks/useDepartmentsScope'
 import type { Category, DepartmentsSettings, NavLinkConfig } from '@/types'
 import { useTranslation } from 'react-i18next'
+import { assetUrl } from '@/lib/assets'
 
 export function MobileMenu({
   open,
@@ -167,7 +168,14 @@ export function MobileMenu({
                     onClick={() => toggle('all-departments')}
                     className="flex w-full items-center justify-between px-4 py-3.5 text-left text-[15px] font-medium text-ink"
                   >
-                    <span>All Departments</span>
+                    <span className="flex items-center gap-3">
+                      {settings.all_icon ? (
+                        <img src={assetUrl(settings.all_icon)} alt="" loading="lazy" className="h-6 w-6 shrink-0 rounded-lg object-contain" />
+                      ) : (
+                        <LayoutGrid className="h-5 w-5 shrink-0 text-[#5b4a8a]" />
+                      )}
+                      All Departments
+                    </span>
                     <img
                       src="https://cdn.shopify.com/s/files/1/0636/0134/4666/files/icon-arrow-new.svg"
                       alt=""
@@ -210,8 +218,13 @@ export function MobileMenu({
                   <Link
                     to="/shop"
                     onClick={close}
-                    className="block px-4 py-3.5 text-[15px] font-medium text-ink hover:bg-[#fafafa]"
+                    className="flex items-center gap-3 px-4 py-3.5 text-[15px] font-medium text-ink hover:bg-[#fafafa]"
                   >
+                    {settings.shop_all_icon ? (
+                      <img src={assetUrl(settings.shop_all_icon)} alt="" loading="lazy" className="h-6 w-6 shrink-0 rounded-lg object-contain" />
+                    ) : (
+                      <LayoutGrid className="h-5 w-5 shrink-0 text-[#5b4a8a]" />
+                    )}
                     Shop all
                   </Link>
                 </li>
@@ -221,8 +234,13 @@ export function MobileMenu({
                   <Link
                     to="/collections"
                     onClick={close}
-                    className="block px-4 py-3.5 text-[15px] font-medium text-ink hover:bg-[#fafafa]"
+                    className="flex items-center gap-3 px-4 py-3.5 text-[15px] font-medium text-ink hover:bg-[#fafafa]"
                   >
+                    {settings.collections_icon ? (
+                      <img src={assetUrl(settings.collections_icon)} alt="" loading="lazy" className="h-6 w-6 shrink-0 rounded-lg object-contain" />
+                    ) : (
+                      <LayoutGrid className="h-5 w-5 shrink-0 text-[#5b4a8a]" />
+                    )}
                     Collections
                   </Link>
                 </li>
@@ -277,8 +295,20 @@ function CategoryRow({
         <Link
           to={`/category/${category.slug}`}
           onClick={onNavigate}
-          className="flex-1 px-4 py-3.5 text-[15px] font-medium text-ink hover:bg-[#fafafa]"
+          className="flex flex-1 items-center gap-3 px-4 py-3.5 text-[15px] font-medium text-ink hover:bg-[#fafafa]"
         >
+          {category.icon || category.image ? (
+            <img
+              src={assetUrl(category.icon || category.image)}
+              alt={category.name}
+              loading="lazy"
+              className="h-7 w-7 shrink-0 rounded-lg object-contain"
+            />
+          ) : (
+            <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-slate-50 text-[#5b4a8a]">
+              <LayoutGrid className="h-4 w-4" />
+            </span>
+          )}
           {category.name}
         </Link>
         {hasChildren && (
@@ -315,8 +345,11 @@ function CategoryRow({
                 <Link
                   to={`/category/${child.slug}`}
                   onClick={onNavigate}
-                  className="block px-6 py-2.5 text-[14px] text-[#444] hover:bg-[#f0f0f0]"
+                  className="flex items-center gap-2 px-6 py-2.5 text-[14px] text-[#444] hover:bg-[#f0f0f0]"
                 >
+                  {child.icon || child.image ? (
+                    <img src={assetUrl(child.icon || child.image)} alt={child.name} loading="lazy" className="h-5 w-5 shrink-0 rounded object-contain" />
+                  ) : null}
                   {child.name}
                 </Link>
               </li>
