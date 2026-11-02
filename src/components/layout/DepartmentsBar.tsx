@@ -163,12 +163,12 @@ export function DepartmentsBar({
         >
           {(settings.show_all ?? true) && (
             <div data-departments-trigger className="shrink-0" onMouseEnter={openShopPanel} onMouseLeave={requestClose}>
-              <button
-                type="button"
+              <Link
+                to="/categories"
                 aria-expanded={openPanel === 'shop'}
                 aria-haspopup="true"
                 aria-controls="departments-panel"
-                onClick={() => (openPanel === 'shop' ? closePanel() : openShopPanel())}
+                onClick={closePanel}
                 className={cardClass(openPanel === 'shop')}
               >
                 {settings.all_icon ? (
@@ -177,7 +177,7 @@ export function DepartmentsBar({
                   <LayoutGrid className="h-9 w-9 text-[#5b4a8a] transition-transform duration-300 group-hover:scale-110 sm:h-10 sm:w-10" />
                 )}
                 <span className={labelClass}>{t('All Categories')}</span>
-              </button>
+              </Link>
             </div>
           )}
 
