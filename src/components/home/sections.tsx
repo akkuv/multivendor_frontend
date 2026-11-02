@@ -941,7 +941,7 @@ export function ValuePropsSection({ items }: { items: HomeValueProp[] }) {
             >
               <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-gold-soft text-gold-deep transition-transform duration-300 group-hover:scale-110">
                 {icon_image ? (
-                  <img src={assetUrl(icon_image)} alt={title} loading="lazy" className="h-7 w-7 rounded-full object-contain" />
+                  <img src={assetUrl(icon_image)} alt={title} className="h-7 w-7 rounded-full object-contain" />
                 ) : (
                   <Icon className="h-5 w-5" />
                 )}

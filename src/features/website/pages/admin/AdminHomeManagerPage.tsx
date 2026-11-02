@@ -1939,6 +1939,7 @@ export function AdminHomeManagerPage({
       Array.isArray(config.items)
         ? (config.items as HomeValueProp[]).map((item) => ({
             icon: String(item.icon ?? 'gem'),
+            icon_image: item.icon_image ? String(item.icon_image) : null,
             title: String(item.title ?? ''),
             description: String(item.description ?? ''),
           }))

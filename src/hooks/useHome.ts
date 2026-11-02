@@ -8,7 +8,7 @@ import type { HomePageData } from '@/types'
  * snapshots (e.g. captured before the storefront layout was made deterministic)
  * are discarded instead of being served as fresh data.
  */
-export const HOME_PAGE_CACHE_VERSION = 6
+export const HOME_PAGE_CACHE_VERSION = 7
 
 export const HOME_PAGE_CACHE_KEY = 'home-page-cache'
 
