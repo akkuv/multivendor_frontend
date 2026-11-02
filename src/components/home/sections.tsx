@@ -930,17 +930,20 @@ export function ValuePropsSection({ items }: { items: HomeValueProp[] }) {
   if (!items?.length) return null
 
   return (
-    <section className="mx-auto w-full max-w-[1440px] px-4 pt-5 sm:px-6 lg:px-8">
-      <div className="grid overflow-hidden border border-line-warm bg-ivory sm:grid-cols-2 lg:grid-cols-5">
+    <section className="mx-auto w-full max-w-[1440px] px-4 py-6 sm:px-6 lg:px-8">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
         {items.map(({ icon, icon_image, title, description }, index) => {
           const Icon = valuePropIconMap[icon] ?? Gem
           return (
-            <div key={`${icon}-${title}-${index}`} className="group flex gap-3 border-b border-line-warm p-5 last:border-b-0 sm:p-6 lg:border-b-0 lg:border-r lg:last:border-r-0">
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-gold-soft text-gold-deep transition-colors group-hover:bg-gold-deep group-hover:text-[#f7efdb]">
+            <div
+              key={`${icon}-${title}-${index}`}
+              className="group flex flex-col items-center gap-3 rounded-2xl border border-line-warm bg-white p-5 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-gold-mid/60 hover:shadow-lg"
+            >
+              <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-gold-soft text-gold-deep transition-transform duration-300 group-hover:scale-110">
                 {icon_image ? (
-                  <img src={assetUrl(icon_image)} alt={title} loading="lazy" className="h-6 w-6 rounded-full object-contain" />
+                  <img src={assetUrl(icon_image)} alt={title} loading="lazy" className="h-7 w-7 rounded-full object-contain" />
                 ) : (
-                  <Icon className="h-4.5 w-4.5" />
+                  <Icon className="h-5 w-5" />
                 )}
               </span>
               <div>
