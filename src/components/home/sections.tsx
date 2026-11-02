@@ -931,13 +931,17 @@ export function ValuePropsSection({ items }: { items: HomeValueProp[] }) {
 
   return (
     <section className="mx-auto w-full max-w-[1440px] px-4 pt-5 sm:px-6 lg:px-8">
-      <div className="grid overflow-hidden border border-line-warm bg-ivory sm:grid-cols-2 lg:grid-cols-4">
-        {items.map(({ icon, title, description }, index) => {
+      <div className="grid overflow-hidden border border-line-warm bg-ivory sm:grid-cols-2 lg:grid-cols-5">
+        {items.map(({ icon, icon_image, title, description }, index) => {
           const Icon = valuePropIconMap[icon] ?? Gem
           return (
             <div key={`${icon}-${title}-${index}`} className="group flex gap-3 border-b border-line-warm p-5 last:border-b-0 sm:p-6 lg:border-b-0 lg:border-r lg:last:border-r-0">
               <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-gold-soft text-gold-deep transition-colors group-hover:bg-gold-deep group-hover:text-[#f7efdb]">
-                <Icon className="h-4.5 w-4.5" />
+                {icon_image ? (
+                  <img src={assetUrl(icon_image)} alt={title} loading="lazy" className="h-6 w-6 rounded-full object-contain" />
+                ) : (
+                  <Icon className="h-4.5 w-4.5" />
+                )}
               </span>
               <div>
                 <h3 className="text-sm font-bold text-ink">{title}</h3>

@@ -1085,6 +1085,7 @@ export type HomeSectionType =
 
 export interface HomeValueProp {
   icon: string
+  icon_image?: string | null
   title: string
   description: string
 }

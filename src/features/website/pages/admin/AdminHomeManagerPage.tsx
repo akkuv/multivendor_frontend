@@ -308,6 +308,12 @@ function ValuePropsItemsEditor({
               <Trash2 className="h-4 w-4" />
             </Button>
           </div>
+          <ImageField
+            label={t('Icon image (optional, overrides the icon above)')}
+            value={item.icon_image ?? ''}
+            onChange={(v) => updateItem(index, { icon_image: v || null })}
+            placeholder={t('https://...icon.png')}
+          />
           <Input value={item.title} onChange={(e) => updateItem(index, { title: e.target.value })} placeholder={t('Title e.g. Curated selection')} />
           <Textarea rows={2} value={item.description} onChange={(e) => updateItem(index, { description: e.target.value })} placeholder={t('Short description')} />
         </div>
@@ -316,7 +322,7 @@ function ValuePropsItemsEditor({
         type="button"
         variant="outline"
         size="sm"
-        onClick={() => onChange([...items, { icon: 'gem', title: '', description: '' }])}
+        onClick={() => onChange([...items, { icon: 'gem', icon_image: null, title: '', description: '' }])}
       >
         <Plus className="h-4 w-4" />
         {t('Add Item')}
