@@ -144,22 +144,22 @@ export function DepartmentsBar({
 
   // Small card styling (icon top + name bottom), no background, spread across the row.
   const cardClass = (active: boolean) =>
-    `group flex w-[88px] shrink-0 flex-col items-center justify-center gap-1.5 rounded-2xl px-2 py-2.5 transition-all duration-300 sm:w-[96px] ${
+    `group flex flex-1 min-w-[96px] max-w-[160px] flex-col items-center justify-center gap-2 rounded-2xl border px-3 py-3 transition-all duration-300 ${
       active
-        ? 'bg-[#e9e2f7] shadow-[0_0_0_1px_#c4b5fd,0_8px_24px_-8px_rgba(124,58,237,0.25)]'
-        : 'bg-[#f3f0fa] hover:-translate-y-0.5 hover:bg-[#ebe5f7] hover:shadow-md'
+        ? 'border-gold-deep/40 bg-white shadow-[0_0_0_1px_#c4b5fd,0_8px_24px_-8px_rgba(124,58,237,0.2)]'
+        : 'border-line-warm bg-white hover:-translate-y-0.5 hover:border-gold-mid/60 hover:shadow-md'
     }`
 
-  const iconBoxClass = 'grid h-8 w-8 place-items-center rounded-lg bg-[#f3f0fa]/70 text-[#5b4a8a] transition-transform duration-300 group-hover:scale-110 group-hover:bg-[#f3f0fa] sm:h-9 sm:w-9'
-  const iconImgClass = 'h-8 w-8 rounded-lg object-contain transition-transform duration-300 group-hover:scale-110 sm:h-9 sm:w-9'
-  const labelClass = 'line-clamp-2 text-center text-[10px] font-semibold leading-tight sm:text-[11px]'
+  const iconBoxClass = 'grid h-9 w-9 place-items-center rounded-lg bg-slate-50 text-[#5b4a8a] transition-transform duration-300 group-hover:scale-110 group-hover:bg-slate-100 sm:h-10 sm:w-10'
+  const iconImgClass = 'h-9 w-9 rounded-lg object-contain transition-transform duration-300 group-hover:scale-110 sm:h-10 sm:w-10'
+  const labelClass = 'line-clamp-2 text-center text-[11px] font-semibold leading-tight text-[#2a2540] sm:text-[12px]'
 
   return (
     <nav className="relative border-b border-[#e8e4f0] bg-white">
-      <div className="container-store flex h-[118px] items-center gap-4 sm:h-[112px]">
+      <div className="container-store flex items-center gap-4 py-3 sm:py-4">
         <div
           ref={rowRef}
-          className="flex min-w-0 flex-1 items-center gap-3 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-4"
+          className="flex min-w-0 flex-1 items-center gap-3 overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-4"
         >
           {settings.show_all && (
             <div data-departments-trigger className="shrink-0" onMouseEnter={openShopPanel} onMouseLeave={requestClose}>
@@ -171,7 +171,7 @@ export function DepartmentsBar({
                 onClick={() => (openPanel === 'shop' ? closePanel() : openShopPanel())}
                 className={cardClass(openPanel === 'shop')}
               >
-                <LayoutGrid className="h-8 w-8 text-[#5b4a8a] transition-transform duration-300 group-hover:scale-110 sm:h-9 sm:w-9" />
+                <LayoutGrid className="h-9 w-9 text-[#5b4a8a] transition-transform duration-300 group-hover:scale-110 sm:h-10 sm:w-10" />
                 <span className={labelClass}>{t('All Categories')}</span>
               </button>
             </div>
