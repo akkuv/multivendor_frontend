@@ -350,8 +350,8 @@ export function AdminCategoriesPage() {
               <Textarea name="description" defaultValue={editing?.description ?? ''} />
             </FormField>
             <div className="grid grid-cols-2 gap-4">
-              <FormField label={t('Icon')} error={fieldError('icon')}>
-                <Input name="icon" defaultValue={editing?.icon ?? ''} placeholder={t('lucide icon name')} />
+              <FormField label={t('Icon Image')} error={fieldError('icon')}>
+                <ImageField name="icon" initialValue={editing?.icon ?? ''} accept="image/*" />
               </FormField>
               <FormField label={t('Image URL')} error={fieldError('image')}>
                 <ImageField name="image" initialValue={editing?.image ?? ''} />
