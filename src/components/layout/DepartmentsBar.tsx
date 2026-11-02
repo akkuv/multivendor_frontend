@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { ChevronDown, LayoutGrid } from 'lucide-react'
 import { MegaMenuPanel } from '@/components/layout/MegaMenuPanel'
+import { assetUrl } from '@/lib/assets'
 import { useCategories } from '@/hooks/useCategories'
 import { useDepartmentsScope } from '@/hooks/useDepartmentsScope'
 import type { Category, DepartmentsSettings, NavLinkConfig } from '@/types'
@@ -153,24 +154,31 @@ export function DepartmentsBar({
   const panelScope: 'subcategory' | 'category' = activeDepartment && departmentChildren.length > 0 ? 'subcategory' : 'category'
 
   return (
-    <nav className="relative hidden border-b border-line-warm bg-white md:block">
-      <div className="container-store flex h-[72px] items-center gap-6">
-        {/* Departments row (text-based, scrollable) */}
-        <div ref={rowRef} className="flex min-w-0 flex-1 items-center gap-6 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <nav className="relative border-b border-[#e8e4f0] bg-[#faf8fd]">
+      <div className="container-store flex h-[132px] items-center gap-3 sm:h-[124px]">
+        {/* Cards row (icon top + name bottom), horizontally scrollable */}
+        <div
+          ref={rowRef}
+          className="flex min-w-0 flex-1 items-center gap-3 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-4"
+        >
           {settings.show_all && (
-            <div data-departments-trigger className="relative shrink-0" onMouseEnter={openShopPanel} onMouseLeave={requestClose}>
+            <div data-departments-trigger className="shrink-0" onMouseEnter={openShopPanel} onMouseLeave={requestClose}>
               <button
                 type="button"
                 aria-expanded={openPanel === 'shop'}
                 aria-haspopup="true"
                 aria-controls="departments-panel"
                 onClick={() => (openPanel === 'shop' ? closePanel() : openShopPanel())}
-                className="group relative flex items-center gap-1.5 text-[13px] font-bold uppercase tracking-[0.12em] text-[#3a332a] transition-colors hover:text-gold-deep"
+                className={`group flex w-[108px] shrink-0 flex-col items-center justify-center gap-2 rounded-2xl px-2 py-3 transition-all duration-300 sm:w-[124px] ${
+                  openPanel === 'shop'
+                    ? 'bg-[#e9e2f7] shadow-[0_0_0_1px_#c4b5fd,0_8px_24px_-8px_rgba(124,58,237,0.25)]'
+                    : 'bg-[#f3f0fa] hover:-translate-y-0.5 hover:bg-[#ebe5f7] hover:shadow-md'
+                }`}
               >
-                <LayoutGrid className="h-4 w-4" />
-                {t('Shop')}
-                <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-200 ${openPanel === 'shop' ? 'rotate-180' : ''}`} />
-                <span className="absolute -bottom-1 left-0 h-px w-0 bg-gold-deep transition-all duration-300 group-hover:w-full" />
+                <LayoutGrid className="h-12 w-12 text-[#5b4a8a] transition-transform duration-300 group-hover:scale-110 sm:h-14 sm:w-14" />
+                <span className="text-center text-[13px] font-semibold leading-tight text-[#2a2540] sm:text-[14px]">
+                  {t('All Categories')}
+                </span>
               </button>
             </div>
           )}
@@ -190,24 +198,53 @@ export function DepartmentsBar({
                   to={`/category/${category.slug}`}
                   aria-expanded={hasChildren ? isOpen : undefined}
                   className={({ isActive }) =>
-                    `group relative flex items-center gap-1 text-[13px] font-bold uppercase tracking-[0.12em] transition-colors ${
-                      isActive || isOpen ? 'text-gold-deep' : 'text-[#3a332a] hover:text-gold-deep'
+                    `group flex w-[108px] shrink-0 flex-col items-center justify-center gap-2 rounded-2xl px-2 py-3 transition-all duration-300 sm:w-[124px] ${
+                      isActive || isOpen
+                        ? 'bg-[#e9e2f7] shadow-[0_0_0_1px_#c4b5fd,0_8px_24px_-8px_rgba(124,58,237,0.25)]'
+                        : 'bg-[#f3f0fa] hover:-translate-y-0.5 hover:bg-[#ebe5f7] hover:shadow-md'
                     }`
                   }
                 >
-                  {category.name}
-                  {hasChildren && (
-                    <ChevronDown className={`h-3 w-3 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+                  {category.image ? (
+                    <img
+                      src={assetUrl(category.image)}
+                      alt={category.name}
+                      loading="lazy"
+                      className="h-12 w-12 rounded-xl object-contain transition-transform duration-300 group-hover:scale-110 sm:h-14 sm:w-14"
+                    />
+                  ) : (
+                    <span className="grid h-12 w-12 place-items-center rounded-xl bg-white/60 text-[#5b4a8a] sm:h-14 sm:w-14">
+                      <LayoutGrid className="h-7 w-7 sm:h-8 sm:w-8" />
+                    </span>
                   )}
-                  <span className="absolute -bottom-1 left-0 h-px w-0 bg-gold-deep transition-all duration-300 group-hover:w-full" />
+                  <span className="line-clamp-2 text-center text-[13px] font-semibold leading-tight text-[#2a2540] sm:text-[14px]">
+                    {category.name}
+                  </span>
                 </NavLink>
               </div>
             )
           })}
+
+          {/* More card */}
+          {shown.length > 0 && (
+            <div className="shrink-0">
+              <Link
+                to="/shop"
+                className="group flex w-[108px] shrink-0 flex-col items-center justify-center gap-2 rounded-2xl bg-[#f3f0fa] px-2 py-3 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#ebe5f7] hover:shadow-md sm:w-[124px]"
+              >
+                <span className="grid h-12 w-12 place-items-center rounded-xl bg-white/60 text-[#5b4a8a] sm:h-14 sm:w-14">
+                  <ChevronDown className="h-7 w-7 sm:h-8 sm:w-8" />
+                </span>
+                <span className="text-center text-[13px] font-semibold leading-tight text-[#2a2540] sm:text-[14px]">
+                  {t('More')}
+                </span>
+              </Link>
+            </div>
+          )}
         </div>
 
         {/* Right-side pill action buttons */}
-        <div className="flex shrink-0 items-center gap-3">
+        <div className="hidden shrink-0 items-center gap-3 lg:flex">
           {settings.show_shop_all && (
             <Link
               to="/shop"
