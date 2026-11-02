@@ -956,7 +956,7 @@ export function ValuePropsSection({ items }: { items: HomeValueProp[] }) {
           {items.map(({ icon_image, title, description }, index) => (
             <div
               key={`${title}-${index}`}
-              className="group flex w-[260px] shrink-0 snap-start flex-row items-center gap-3 rounded-2xl border border-line-warm bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-gold-mid/60 hover:shadow-lg sm:w-[280px] lg:w-[calc((100%-4rem)/5)]"
+              className="group flex w-[260px] shrink-0 snap-start flex-row items-center gap-3 rounded-2xl border border-line-warm bg-white p-5 shadow-sm transition-all duration-300 hover:border-gold-mid/60 hover:shadow-lg sm:w-[280px] lg:w-[calc((100%-4rem)/5)]"
             >
               <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-gold-soft transition-transform duration-300 group-hover:scale-110">
                 {icon_image ? (
