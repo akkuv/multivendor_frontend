@@ -929,21 +929,38 @@ const valuePropIconMap: Record<string, LucideIcon> = {
 export function ValuePropsSection({ items }: { items: HomeValueProp[] }) {
   if (!items?.length) return null
 
+  const scrollerRef = useRef<HTMLDivElement>(null)
+  const scrollBy = (dir: -1 | 1) => {
+    const el = scrollerRef.current
+    if (!el) return
+    el.scrollBy({ left: dir * el.clientWidth * 0.8, behavior: 'smooth' })
+  }
+
   return (
     <section className="mx-auto w-full max-w-[1440px] px-4 py-6 sm:px-6 lg:px-8">
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-        {items.map(({ icon, icon_image, title, description }, index) => {
-          const Icon = valuePropIconMap[icon] ?? Gem
-          return (
+      <div className="relative">
+        <button
+          type="button"
+          onClick={() => scrollBy(-1)}
+          aria-label="Scroll left"
+          className="absolute left-0 top-1/2 z-10 hidden -translate-y-1/2 -translate-x-1/2 grid h-9 w-9 place-items-center rounded-full border border-line-warm bg-white text-ink shadow-md transition hover:bg-cream sm:grid"
+        >
+          <ChevronLeft className="h-4 w-4" />
+        </button>
+        <div
+          ref={scrollerRef}
+          className="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
+          {items.map(({ icon_image, title, description }, index) => (
             <div
-              key={`${icon}-${title}-${index}`}
-              className="group flex flex-row items-center gap-3 rounded-2xl border border-line-warm bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-gold-mid/60 hover:shadow-lg"
+              key={`${title}-${index}`}
+              className="group flex w-[260px] shrink-0 snap-start flex-row items-center gap-3 rounded-2xl border border-line-warm bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-gold-mid/60 hover:shadow-lg sm:w-[280px] lg:w-[calc((100%-4rem)/5)]"
             >
-              <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-gold-soft text-gold-deep transition-transform duration-300 group-hover:scale-110">
+              <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-gold-soft transition-transform duration-300 group-hover:scale-110">
                 {icon_image ? (
                   <img src={assetUrl(icon_image)} alt={title} className="h-7 w-7 rounded-full object-contain" />
                 ) : (
-                  <Icon className="h-5 w-5" />
+                  <span className="h-7 w-7 rounded-full bg-gold-soft" />
                 )}
               </span>
               <div className="min-w-0 text-left">
@@ -951,8 +968,16 @@ export function ValuePropsSection({ items }: { items: HomeValueProp[] }) {
                 <p className="mt-1 text-xs leading-relaxed text-ink-soft">{description}</p>
               </div>
             </div>
-          )
-        })}
+          ))}
+        </div>
+        <button
+          type="button"
+          onClick={() => scrollBy(1)}
+          aria-label="Scroll right"
+          className="absolute right-0 top-1/2 z-10 hidden -translate-y-1/2 translate-x-1/2 grid h-9 w-9 place-items-center rounded-full border border-line-warm bg-white text-ink shadow-md transition hover:bg-cream sm:grid"
+        >
+          <ChevronRight className="h-4 w-4" />
+        </button>
       </div>
     </section>
   )

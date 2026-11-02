@@ -286,22 +286,12 @@ function ValuePropsItemsEditor({
     <div className="space-y-3">
       {items.map((item, index) => (
         <div key={index} className="space-y-2 rounded-lg border bg-muted/30 p-3">
-          <div className="flex items-center gap-2">
-            <Select value={item.icon} onValueChange={(v) => updateItem(index, { icon: v })}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {valuePropIconOptions.map((o) => (
-                  <SelectItem key={o.value} value={o.value}>{t(o.label)}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+          <div className="flex items-center justify-end">
             <Button
               type="button"
               variant="ghost"
               size="icon"
-              className="ml-auto text-muted-foreground hover:text-destructive"
+              className="text-muted-foreground hover:text-destructive"
               onClick={() => onChange(items.filter((_, i) => i !== index))}
               title={t('Remove item')}
             >
@@ -309,7 +299,7 @@ function ValuePropsItemsEditor({
             </Button>
           </div>
           <ImageField
-            label={t('Icon image (optional, overrides the icon above)')}
+            label={t('Icon image')}
             value={item.icon_image ?? ''}
             onChange={(v) => updateItem(index, { icon_image: v || null })}
             placeholder={t('https://...icon.png')}
@@ -322,7 +312,7 @@ function ValuePropsItemsEditor({
         type="button"
         variant="outline"
         size="sm"
-        onClick={() => onChange([...items, { icon: 'gem', icon_image: null, title: '', description: '' }])}
+        onClick={() => onChange([...items, { icon: '', icon_image: null, title: '', description: '' }])}
       >
         <Plus className="h-4 w-4" />
         {t('Add Item')}
