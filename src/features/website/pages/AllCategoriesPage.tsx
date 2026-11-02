@@ -14,12 +14,8 @@ export function AllCategoriesPage() {
     <div>
       <Breadcrumb items={[{ label: t('All Categories') }]} />
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
-        <div className="mb-8">
-          <p className="inline-flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.3em] text-[#a07a28]">
-            <span className="h-px w-8 bg-[#c9a25a]/60" />
-            {t('Shop by category')}
-          </p>
-          <h1 className="mt-2 font-display text-3xl font-semibold text-[#1c1812] sm:text-4xl">
+        <div className="mb-8 text-center">
+          <h1 className="font-display text-3xl font-semibold text-[#1c1812] sm:text-4xl">
             {t('All Categories')}
           </h1>
           <p className="mt-2 text-[#6b5d47]">
