@@ -144,8 +144,10 @@ export function DepartmentsBar({
 
   // Small card styling (icon top + name bottom), no background, spread across the row.
   const cardClass = (active: boolean) =>
-    `group flex w-[84px] shrink-0 flex-col items-center justify-center gap-1 rounded-lg px-1 py-2 transition-all duration-300 sm:w-[92px] ${
-      active ? 'text-gold-deep' : 'text-[#3a332a] hover:text-gold-deep'
+    `group flex w-[88px] shrink-0 flex-col items-center justify-center gap-1.5 rounded-2xl px-2 py-2.5 transition-all duration-300 sm:w-[96px] ${
+      active
+        ? 'bg-[#e9e2f7] shadow-[0_0_0_1px_#c4b5fd,0_8px_24px_-8px_rgba(124,58,237,0.25)]'
+        : 'bg-[#f3f0fa] hover:-translate-y-0.5 hover:bg-[#ebe5f7] hover:shadow-md'
     }`
 
   const iconBoxClass = 'grid h-8 w-8 place-items-center rounded-lg bg-[#f3f0fa]/70 text-[#5b4a8a] transition-transform duration-300 group-hover:scale-110 group-hover:bg-[#f3f0fa] sm:h-9 sm:w-9'
@@ -153,11 +155,11 @@ export function DepartmentsBar({
   const labelClass = 'line-clamp-2 text-center text-[10px] font-semibold leading-tight sm:text-[11px]'
 
   return (
-    <nav className="relative w-full border-b border-[#e8e4f0] bg-white">
-      <div className="w-full px-4 sm:px-6">
+    <nav className="relative border-b border-[#e8e4f0] bg-white">
+      <div className="container-store flex h-[118px] items-center gap-4 sm:h-[112px]">
         <div
           ref={rowRef}
-          className="flex w-full items-center justify-between gap-2 overflow-x-auto overscroll-x-contain py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-3 sm:py-4"
+          className="flex min-w-0 flex-1 items-center gap-3 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-4"
         >
           {settings.show_all && (
             <div data-departments-trigger className="shrink-0" onMouseEnter={openShopPanel} onMouseLeave={requestClose}>
