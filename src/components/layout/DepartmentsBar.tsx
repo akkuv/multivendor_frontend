@@ -153,28 +153,28 @@ export function DepartmentsBar({
   const panelScope: 'subcategory' | 'category' = activeDepartment && departmentChildren.length > 0 ? 'subcategory' : 'category'
 
   return (
-    <nav className="relative hidden border-t border-line-warm bg-ivory md:block">
-      <div className="container-store flex h-11 items-center gap-2">
-        {settings.show_all && (
-          <div data-departments-trigger className="relative shrink-0" onMouseEnter={openShopPanel} onMouseLeave={requestClose}>
-            <button
-              type="button"
-              aria-expanded={openPanel === 'shop'}
-              aria-haspopup="true"
-              aria-controls="departments-panel"
-              onClick={() => (openPanel === 'shop' ? closePanel() : openShopPanel())}
-              className={`flex h-8 items-center gap-2 rounded-full bg-ink px-4 text-[11px] font-bold uppercase tracking-[0.1em] text-[#e9c891] shadow-[0_10px_20px_-10px_rgba(28,24,18,0.55)] transition-colors hover:bg-[#2c2620] ${
-                openPanel === 'shop' ? 'bg-[#2c2620]' : ''
-              }`}
-            >
-              <LayoutGrid className="h-3.5 w-3.5" />
-              {t('Shop')}
-              <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-200 ${openPanel === 'shop' ? 'rotate-180' : ''}`} />
-            </button>
-          </div>
-        )}
+    <nav className="relative hidden border-b border-line-warm bg-white md:block">
+      <div className="container-store flex h-[72px] items-center gap-6">
+        {/* Departments row (text-based, scrollable) */}
+        <div ref={rowRef} className="flex min-w-0 flex-1 items-center gap-6 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {settings.show_all && (
+            <div data-departments-trigger className="relative shrink-0" onMouseEnter={openShopPanel} onMouseLeave={requestClose}>
+              <button
+                type="button"
+                aria-expanded={openPanel === 'shop'}
+                aria-haspopup="true"
+                aria-controls="departments-panel"
+                onClick={() => (openPanel === 'shop' ? closePanel() : openShopPanel())}
+                className="group relative flex items-center gap-1.5 text-[13px] font-bold uppercase tracking-[0.12em] text-[#3a332a] transition-colors hover:text-gold-deep"
+              >
+                <LayoutGrid className="h-4 w-4" />
+                {t('Shop')}
+                <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-200 ${openPanel === 'shop' ? 'rotate-180' : ''}`} />
+                <span className="absolute -bottom-1 left-0 h-px w-0 bg-gold-deep transition-all duration-300 group-hover:w-full" />
+              </button>
+            </div>
+          )}
 
-        <div ref={rowRef} className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {shown.map((category) => {
             const hasChildren = (category.children?.length ?? 0) > 0
             const isOpen = openPanel === category.id
@@ -190,8 +190,8 @@ export function DepartmentsBar({
                   to={`/category/${category.slug}`}
                   aria-expanded={hasChildren ? isOpen : undefined}
                   className={({ isActive }) =>
-                    `flex items-center gap-1 rounded-full px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.08em] transition-colors ${
-                      isActive || isOpen ? 'bg-cream text-gold-deep' : 'text-ink-soft hover:text-ink'
+                    `group relative flex items-center gap-1 text-[13px] font-bold uppercase tracking-[0.12em] transition-colors ${
+                      isActive || isOpen ? 'text-gold-deep' : 'text-[#3a332a] hover:text-gold-deep'
                     }`
                   }
                 >
@@ -199,14 +199,19 @@ export function DepartmentsBar({
                   {hasChildren && (
                     <ChevronDown className={`h-3 w-3 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
                   )}
+                  <span className="absolute -bottom-1 left-0 h-px w-0 bg-gold-deep transition-all duration-300 group-hover:w-full" />
                 </NavLink>
               </div>
             )
           })}
+        </div>
+
+        {/* Right-side pill action buttons */}
+        <div className="flex shrink-0 items-center gap-3">
           {settings.show_shop_all && (
             <Link
               to="/shop"
-              className="shrink-0 rounded-full border border-gold-mid/50 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.08em] text-gold-deep transition-colors hover:border-gold-deep hover:bg-cream"
+              className="inline-flex h-9 items-center justify-center rounded-full border border-gold-mid/60 bg-white px-5 text-[11px] font-bold uppercase tracking-[0.12em] text-gold-deep transition-colors hover:border-gold-deep hover:bg-cream"
             >
               {t('Shop all')}
             </Link>
@@ -215,10 +220,10 @@ export function DepartmentsBar({
             <NavLink
               to="/collections"
               className={({ isActive }) =>
-                `shrink-0 rounded-full border px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.08em] transition-colors ${
+                `inline-flex h-9 items-center justify-center rounded-full border px-5 text-[11px] font-bold uppercase tracking-[0.12em] transition-colors ${
                   isActive
                     ? 'border-gold-deep bg-cream text-gold-deep'
-                    : 'border-gold-mid/50 text-gold-deep hover:border-gold-deep hover:bg-cream'
+                    : 'border-gold-mid/60 bg-white text-gold-deep hover:border-gold-deep hover:bg-cream'
                 }`
               }
             >
