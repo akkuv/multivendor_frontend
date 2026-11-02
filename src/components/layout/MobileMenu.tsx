@@ -160,7 +160,7 @@ export function MobileMenu({
         <div className="flex-1 overflow-y-auto">
           {activeScope && (
             <ul className="divide-y divide-[#f0f0f0] py-1">
-              {activeScope.show_all && (
+              {(activeScope.show_all ?? true) && (
                 <li>
                   <button
                     type="button"

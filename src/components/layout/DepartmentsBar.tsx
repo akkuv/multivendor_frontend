@@ -161,7 +161,7 @@ export function DepartmentsBar({
           ref={rowRef}
           className="flex min-w-0 flex-1 items-center gap-3 overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-4"
         >
-          {settings.show_all && (
+          {(settings.show_all ?? true) && (
             <div data-departments-trigger className="shrink-0" onMouseEnter={openShopPanel} onMouseLeave={requestClose}>
               <button
                 type="button"
