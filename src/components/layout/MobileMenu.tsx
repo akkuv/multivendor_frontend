@@ -207,11 +207,30 @@ export function MobileMenu({
                 </li>
               )}
 
-              {scopedCategories.map((category) => (
-                <li key={category.id}>
-                  <CategoryRow category={category} onNavigate={close} />
-                </li>
-              ))}
+              <li className="px-3 py-2">
+                <div className="grid grid-cols-3 gap-2">
+                  {scopedCategories.map((category) => {
+                    const iconSrc = category.icon || category.image
+                    return (
+                      <Link
+                        key={category.id}
+                        to={`/category/${category.slug}`}
+                        onClick={close}
+                        className="flex flex-col items-center justify-center gap-1.5 rounded-xl border border-[#e8e4f0] bg-white px-2 py-3 text-center transition-colors hover:bg-[#fafafa]"
+                      >
+                        {iconSrc ? (
+                          <img src={assetUrl(iconSrc)} alt={category.name} loading="lazy" className="h-9 w-9 rounded-lg object-contain" />
+                        ) : (
+                          <span className="grid h-9 w-9 place-items-center rounded-lg bg-slate-50 text-[#5b4a8a]">
+                            <LayoutGrid className="h-5 w-5" />
+                          </span>
+                        )}
+                        <span className="line-clamp-2 text-[11px] font-semibold text-[#2a2540]">{category.name}</span>
+                      </Link>
+                    )
+                  })}
+                </div>
+              </li>
 
               {activeScope.show_shop_all && (
                 <li>
