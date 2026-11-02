@@ -939,14 +939,16 @@ export function ValuePropsSection({ items }: { items: HomeValueProp[] }) {
   return (
     <section className="mx-auto w-full max-w-[1440px] px-4 py-6 sm:px-6 lg:px-8">
       <div className="relative">
-        <button
-          type="button"
-          onClick={() => scrollBy(-1)}
-          aria-label="Scroll left"
-          className="absolute left-0 top-1/2 z-10 hidden -translate-y-1/2 -translate-x-1/2 grid h-9 w-9 place-items-center rounded-full border border-line-warm bg-white text-ink shadow-md transition hover:bg-cream sm:grid"
-        >
-          <ChevronLeft className="h-4 w-4" />
-        </button>
+        {items.length > 5 && (
+          <button
+            type="button"
+            onClick={() => scrollBy(-1)}
+            aria-label="Scroll left"
+            className="absolute left-0 top-1/2 z-10 hidden -translate-y-1/2 -translate-x-1/2 grid h-9 w-9 place-items-center rounded-full border border-line-warm bg-white text-ink shadow-md transition hover:bg-cream sm:grid"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </button>
+        )}
         <div
           ref={scrollerRef}
           className="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
@@ -970,14 +972,16 @@ export function ValuePropsSection({ items }: { items: HomeValueProp[] }) {
             </div>
           ))}
         </div>
-        <button
-          type="button"
-          onClick={() => scrollBy(1)}
-          aria-label="Scroll right"
-          className="absolute right-0 top-1/2 z-10 hidden -translate-y-1/2 translate-x-1/2 grid h-9 w-9 place-items-center rounded-full border border-line-warm bg-white text-ink shadow-md transition hover:bg-cream sm:grid"
-        >
-          <ChevronRight className="h-4 w-4" />
-        </button>
+        {items.length > 5 && (
+          <button
+            type="button"
+            onClick={() => scrollBy(1)}
+            aria-label="Scroll right"
+            className="absolute right-0 top-1/2 z-10 hidden -translate-y-1/2 translate-x-1/2 grid h-9 w-9 place-items-center rounded-full border border-line-warm bg-white text-ink shadow-md transition hover:bg-cream sm:grid"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </button>
+        )}
       </div>
     </section>
   )
