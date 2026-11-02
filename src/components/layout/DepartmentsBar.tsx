@@ -144,10 +144,10 @@ export function DepartmentsBar({
 
   // Small card styling (icon top + name bottom), no background, spread across the row.
   const cardClass = (active: boolean) =>
-    `group flex flex-1 min-w-[96px] max-w-[160px] flex-col items-center justify-center gap-2 rounded-2xl border px-3 py-3 transition-all duration-300 ${
+    `group flex flex-1 min-w-[120px] max-w-[220px] flex-col items-center justify-center gap-2 rounded-2xl border px-3 py-3 transition-all duration-300 ${
       active
         ? 'border-gold-deep/40 bg-white shadow-[0_0_0_1px_#c4b5fd,0_8px_24px_-8px_rgba(124,58,237,0.2)]'
-        : 'border-line-warm bg-white hover:-translate-y-0.5 hover:border-gold-mid/60 hover:shadow-md'
+        : 'border-line-warm bg-white hover:border-gold-mid/60 hover:shadow-lg'
     }`
 
   const iconBoxClass = 'grid h-9 w-9 place-items-center rounded-lg bg-slate-50 text-[#5b4a8a] transition-transform duration-300 group-hover:scale-110 group-hover:bg-slate-100 sm:h-10 sm:w-10'
