@@ -937,7 +937,7 @@ export function ValuePropsSection({ items }: { items: HomeValueProp[] }) {
           return (
             <div
               key={`${icon}-${title}-${index}`}
-              className="group flex flex-col items-center gap-3 rounded-2xl border border-line-warm bg-white p-5 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-gold-mid/60 hover:shadow-lg"
+              className="group flex flex-row items-center gap-3 rounded-2xl border border-line-warm bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-gold-mid/60 hover:shadow-lg"
             >
               <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-gold-soft text-gold-deep transition-transform duration-300 group-hover:scale-110">
                 {icon_image ? (
@@ -946,7 +946,7 @@ export function ValuePropsSection({ items }: { items: HomeValueProp[] }) {
                   <Icon className="h-5 w-5" />
                 )}
               </span>
-              <div>
+              <div className="min-w-0 text-left">
                 <h3 className="text-sm font-bold text-ink">{title}</h3>
                 <p className="mt-1 text-xs leading-relaxed text-ink-soft">{description}</p>
               </div>
