@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { ChevronDown, LayoutGrid } from 'lucide-react'
+import { LayoutGrid } from 'lucide-react'
 import { MegaMenuPanel } from '@/components/layout/MegaMenuPanel'
-import { assetUrl } from '@/lib/assets'
 import { useCategories } from '@/hooks/useCategories'
 import { useDepartmentsScope } from '@/hooks/useDepartmentsScope'
 import type { Category, DepartmentsSettings, NavLinkConfig } from '@/types'
+import { assetUrl } from '@/lib/assets'
 
 const OPEN_DELAY = 70
 const CLOSE_DELAY = 150
@@ -42,10 +42,6 @@ export function DepartmentsBar({
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [openPanel])
 
-  // The panel is absolutely positioned inside the sticky header, so it is
-  // already anchored to the bar and never needs the page scroll-locked.
-  // Locking instead detached `position: sticky` and scrolled the whole header
-  // off-screen, which broke hovering. Scrolling simply dismisses the menu.
   useEffect(() => {
     if (openPanel === null) return
     const onScroll = () => {
@@ -66,7 +62,6 @@ export function DepartmentsBar({
     return () => document.removeEventListener('pointermove', onPointerMove)
   }, [openPanel])
 
-  // A horizontally scrolled chip row would leave the panel misaligned.
   useEffect(() => {
     const row = rowRef.current
     if (!row) return
@@ -111,7 +106,6 @@ export function DepartmentsBar({
   const requestClose = () => {
     clearTimers()
     closeTimer.current = window.setTimeout(() => {
-      // Never close while the cursor is still resting on a trigger or inside the panel.
       const { x, y, seen } = pointer.current
       if (seen) {
         const hovered = document.elementFromPoint(x, y)
@@ -123,13 +117,10 @@ export function DepartmentsBar({
 
   const closePanel = () => {
     clearTimers()
-    // Forget the last pointer position so a stale hit-test cannot keep a
-    // freshly opened panel alive.
     pointer.current = { x: 0, y: 0, seen: false }
     setOpenPanel(null)
   }
 
-  // Keeps an already-open panel open while the cursor moves across it.
   const holdOpen = () => {
     clearTimers()
   }
@@ -138,8 +129,6 @@ export function DepartmentsBar({
 
   const allTop = categories.filter((category) => category.is_active !== false)
   const selected = settings.category_ids ?? []
-  // Respect the order chosen by the admin in the settings panel (category_ids
-  // is an ordered list, not just a set).
   const shown =
     selected.length > 0
       ? selected
@@ -153,10 +142,21 @@ export function DepartmentsBar({
     openPanel === 'shop' ? shown : activeDepartment ? (departmentChildren.length > 0 ? departmentChildren : [activeDepartment]) : []
   const panelScope: 'subcategory' | 'category' = activeDepartment && departmentChildren.length > 0 ? 'subcategory' : 'category'
 
+  const cardClass = (active: boolean) =>
+    `group flex w-[88px] shrink-0 flex-col items-center justify-center gap-1.5 rounded-2xl px-2 py-2.5 transition-all duration-300 sm:w-[96px] ${
+      active
+        ? 'bg-[#e9e2f7] shadow-[0_0_0_1px_#c4b5fd,0_8px_24px_-8px_rgba(124,58,237,0.25)]'
+        : 'bg-[#f3f0fa] hover:-translate-y-0.5 hover:bg-[#ebe5f7] hover:shadow-md'
+    }`
+
+  const iconBoxClass = 'grid h-9 w-9 place-items-center rounded-xl bg-white/60 text-[#5b4a8a] transition-transform duration-300 group-hover:scale-110 sm:h-10 sm:w-10'
+  const iconImgClass = 'h-9 w-9 rounded-xl object-contain transition-transform duration-300 group-hover:scale-110 sm:h-10 sm:w-10'
+  const labelClass = 'line-clamp-2 text-center text-[11px] font-semibold leading-tight text-[#2a2540] sm:text-[12px]'
+
   return (
     <nav className="relative border-b border-[#e8e4f0] bg-[#faf8fd]">
       <div className="container-store flex h-[108px] items-center gap-3 sm:h-[104px]">
-        {/* Cards row (icon top + name bottom), horizontally scrollable */}
+        {/* Cards row (icon top + name bottom), horizontally scrollable, includes all features */}
         <div
           ref={rowRef}
           className="flex min-w-0 flex-1 items-center gap-3 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-4"
@@ -169,16 +169,10 @@ export function DepartmentsBar({
                 aria-haspopup="true"
                 aria-controls="departments-panel"
                 onClick={() => (openPanel === 'shop' ? closePanel() : openShopPanel())}
-                className={`group flex w-[108px] shrink-0 flex-col items-center justify-center gap-2 rounded-2xl px-2 py-3 transition-all duration-300 sm:w-[124px] ${
-                  openPanel === 'shop'
-                    ? 'bg-[#e9e2f7] shadow-[0_0_0_1px_#c4b5fd,0_8px_24px_-8px_rgba(124,58,237,0.25)]'
-                    : 'bg-[#f3f0fa] hover:-translate-y-0.5 hover:bg-[#ebe5f7] hover:shadow-md'
-                }`}
+                className={cardClass(openPanel === 'shop')}
               >
                 <LayoutGrid className="h-9 w-9 text-[#5b4a8a] transition-transform duration-300 group-hover:scale-110 sm:h-10 sm:w-10" />
-                <span className="text-center text-[11px] font-semibold leading-tight text-[#2a2540] sm:text-[12px]">
-                  {t('All Categories')}
-                </span>
+                <span className={labelClass}>{t('All Categories')}</span>
               </button>
             </div>
           )}
@@ -186,6 +180,7 @@ export function DepartmentsBar({
           {shown.map((category) => {
             const hasChildren = (category.children?.length ?? 0) > 0
             const isOpen = openPanel === category.id
+            const iconSrc = category.icon || category.image
             return (
               <div
                 key={category.id}
@@ -198,83 +193,45 @@ export function DepartmentsBar({
                   to={`/category/${category.slug}`}
                   aria-expanded={hasChildren ? isOpen : undefined}
                   className={({ isActive }) =>
-                    `group flex w-[88px] shrink-0 flex-col items-center justify-center gap-1.5 rounded-2xl px-2 py-2.5 transition-all duration-300 sm:w-[96px] ${
-                      isActive || isOpen
-                        ? 'bg-[#e9e2f7] shadow-[0_0_0_1px_#c4b5fd,0_8px_24px_-8px_rgba(124,58,237,0.25)]'
-                        : 'bg-[#f3f0fa] hover:-translate-y-0.5 hover:bg-[#ebe5f7] hover:shadow-md'
-                    }`
+                    `group ${cardClass(isActive || isOpen).replace('group ', '')}`
                   }
                 >
-                  {category.image ? (
+                  {iconSrc ? (
                     <img
-                      src={assetUrl(category.image)}
+                      src={assetUrl(iconSrc)}
                       alt={category.name}
                       loading="lazy"
-                      className="h-9 w-9 rounded-xl object-contain transition-transform duration-300 group-hover:scale-110 sm:h-10 sm:w-10"
+                      className={iconImgClass}
                     />
                   ) : (
-                    <span className="grid h-9 w-9 place-items-center rounded-xl bg-white/60 text-[#5b4a8a] sm:h-10 sm:w-10">
+                    <span className={iconBoxClass}>
                       <LayoutGrid className="h-5 w-5 sm:h-6 sm:w-6" />
                     </span>
                   )}
-                  <span className="line-clamp-2 text-center text-[11px] font-semibold leading-tight text-[#2a2540] sm:text-[12px]">
-                    {category.name}
-                  </span>
+                  <span className={labelClass}>{category.name}</span>
                 </NavLink>
               </div>
             )
           })}
 
-          {/* More card */}
-          {shown.length > 0 && (
-            <div className="shrink-0">
-              <Link
-                to="/shop"
-                className="group flex w-[88px] shrink-0 flex-col items-center justify-center gap-1.5 rounded-2xl bg-[#f3f0fa] px-2 py-2.5 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#ebe5f7] hover:shadow-md sm:w-[96px]"
-              >
-                <span className="grid h-9 w-9 place-items-center rounded-xl bg-white/60 text-[#5b4a8a] sm:h-10 sm:w-10">
-                  <ChevronDown className="h-5 w-5 sm:h-6 sm:w-6" />
-                </span>
-                <span className="text-center text-[11px] font-semibold leading-tight text-[#2a2540] sm:text-[12px]">
-                  {t('More')}
-                </span>
-              </Link>
-            </div>
-          )}
-        </div>
-
-        {/* Right-side action cards (same card style as categories) */}
-        <div className="flex shrink-0 items-center gap-3">
           {settings.show_shop_all && (
-            <Link
-              to="/shop"
-              className="group flex w-[88px] shrink-0 flex-col items-center justify-center gap-1.5 rounded-2xl bg-[#f3f0fa] px-2 py-2.5 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#ebe5f7] hover:shadow-md sm:w-[96px]"
-            >
-              <span className="grid h-9 w-9 place-items-center rounded-xl bg-white/60 text-[#5b4a8a] transition-transform duration-300 group-hover:scale-110 sm:h-10 sm:w-10">
-                <LayoutGrid className="h-5 w-5 sm:h-6 sm:w-6" />
+            <Link to="/shop" className={cardClass(false)}>
+              <span className={iconBoxClass}>
+                <LayoutGrid className="h-5 w-5 transition-transform duration-300 group-hover:scale-110 sm:h-6 sm:w-6" />
               </span>
-              <span className="line-clamp-2 text-center text-[11px] font-semibold leading-tight text-[#2a2540] sm:text-[12px]">
-                {t('Shop all')}
-              </span>
+              <span className={labelClass}>{t('Shop all')}</span>
             </Link>
           )}
+
           {settings.show_collections && (
             <NavLink
               to="/collections"
-              className={({ isActive }) =>
-                `group flex w-[88px] shrink-0 flex-col items-center justify-center gap-1.5 rounded-2xl px-2 py-2.5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md sm:w-[96px] ${
-                  isActive
-                    ? 'bg-[#e9e2f7] shadow-[0_0_0_1px_#c4b5fd,0_8px_24px_-8px_rgba(124,58,237,0.25)]'
-                    : 'bg-[#f3f0fa] hover:bg-[#ebe5f7]'
-                }`
-              }
+              className={({ isActive }) => `group ${cardClass(isActive).replace('group ', '')}`}
             >
-              <span className="grid h-9 w-9 place-items-center rounded-xl bg-white/60 text-[#5b4a8a] transition-transform duration-300 group-hover:scale-110 sm:h-10 sm:w-10">
-                <LayoutGrid className="h-5 w-5 sm:h-6 sm:w-6" />
+              <span className={iconBoxClass}>
+                <LayoutGrid className="h-5 w-5 transition-transform duration-300 group-hover:scale-110 sm:h-6 sm:w-6" />
               </span>
-              <span className="line-clamp-2 text-center text-[11px] font-semibold leading-tight text-[#2a2540] sm:text-[12px]">
-                {t('Collections')}
-              </span>
+              <span className={labelClass}>{t('Collections')}</span>
             </NavLink>
           )}
         </div>
