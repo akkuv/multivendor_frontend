@@ -1435,6 +1435,9 @@ export interface NavLinkDepartments {
   show_all: boolean
   show_shop_all: boolean
   show_collections: boolean
+  all_icon?: string | null
+  shop_all_icon?: string | null
+  collections_icon?: string | null
 }
 
 export interface DepartmentsSettings {
@@ -1443,6 +1446,9 @@ export interface DepartmentsSettings {
   show_all: boolean
   show_shop_all: boolean
   show_collections: boolean
+  all_icon?: string | null
+  shop_all_icon?: string | null
+  collections_icon?: string | null
 }
 
 export interface NavbarSettings {

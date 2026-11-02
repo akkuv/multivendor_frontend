@@ -144,6 +144,26 @@ function LinkEditorRow({
                 </label>
               </div>
 
+              <div className="grid gap-3 sm:grid-cols-3">
+                <ImageField
+                  label={t('All Categories icon (optional)')}
+                  value={scope.all_icon ?? ''}
+                  onChange={(v) => patchScope({ all_icon: v || null })}
+                  placeholder={t('https://...icon.png')}
+                />
+                <ImageField
+                  label={t('Shop All icon (optional)')}
+                  value={scope.shop_all_icon ?? ''}
+                  onChange={(v) => patchScope({ shop_all_icon: v || null })}
+                  placeholder={t('https://...icon.png')}
+                />
+                <ImageField
+                  label={t('Collections icon (optional)')}
+                  value={scope.collections_icon ?? ''}
+                  onChange={(v) => patchScope({ collections_icon: v || null })}
+                  placeholder={t('https://...icon.png')}
+                />
+              </div>
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <Label className="text-xs">{t('Categories shown for this page')}</Label>
@@ -588,6 +608,26 @@ export function AdminWebsiteSettingsPage() {
                 />
                 {t('Show "Collections" link')}
               </label>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-3">
+              <ImageField
+                label={t('All Categories icon (optional)')}
+                value={departments?.all_icon ?? ''}
+                onChange={(v) => patchDepartments({ all_icon: v || null })}
+                placeholder={t('https://...icon.png')}
+              />
+              <ImageField
+                label={t('Shop All icon (optional)')}
+                value={departments?.shop_all_icon ?? ''}
+                onChange={(v) => patchDepartments({ shop_all_icon: v || null })}
+                placeholder={t('https://...icon.png')}
+              />
+              <ImageField
+                label={t('Collections icon (optional)')}
+                value={departments?.collections_icon ?? ''}
+                onChange={(v) => patchDepartments({ collections_icon: v || null })}
+                placeholder={t('https://...icon.png')}
+              />
             </div>
             <div className="space-y-2">
               <div className="flex items-center justify-between">

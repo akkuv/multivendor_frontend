@@ -13,7 +13,6 @@ export function findActiveNavLink(
   links?: NavLinkConfig[] | null,
 ): NavLinkConfig | null {
   if (!links || links.length === 0) return null
-
   const path = pathname.replace(/\/+$/, '') || '/'
   const candidates = links.filter((link) => link.url.startsWith('/') && link.url !== '/')
 
@@ -51,6 +50,9 @@ export function useDepartmentsScope(
       show_all: override.show_all,
       show_shop_all: override.show_shop_all,
       show_collections: override.show_collections,
+      all_icon: override.all_icon ?? null,
+      shop_all_icon: override.shop_all_icon ?? null,
+      collections_icon: override.collections_icon ?? null,
     }
   }, [departments, links, location.pathname])
 }
@@ -80,6 +82,9 @@ export function resolveLinkDepartments(
       show_all: override.show_all,
       show_shop_all: override.show_shop_all,
       show_collections: override.show_collections,
+      all_icon: override.all_icon ?? null,
+      shop_all_icon: override.shop_all_icon ?? null,
+      collections_icon: override.collections_icon ?? null,
     }
   }
 
