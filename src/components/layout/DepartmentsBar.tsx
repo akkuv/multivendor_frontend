@@ -155,7 +155,7 @@ export function DepartmentsBar({
 
   return (
     <nav className="relative border-b border-[#e8e4f0] bg-[#faf8fd]">
-      <div className="container-store flex h-[132px] items-center gap-3 sm:h-[124px]">
+      <div className="container-store flex h-[108px] items-center gap-3 sm:h-[104px]">
         {/* Cards row (icon top + name bottom), horizontally scrollable */}
         <div
           ref={rowRef}
@@ -175,8 +175,8 @@ export function DepartmentsBar({
                     : 'bg-[#f3f0fa] hover:-translate-y-0.5 hover:bg-[#ebe5f7] hover:shadow-md'
                 }`}
               >
-                <LayoutGrid className="h-12 w-12 text-[#5b4a8a] transition-transform duration-300 group-hover:scale-110 sm:h-14 sm:w-14" />
-                <span className="text-center text-[13px] font-semibold leading-tight text-[#2a2540] sm:text-[14px]">
+                <LayoutGrid className="h-9 w-9 text-[#5b4a8a] transition-transform duration-300 group-hover:scale-110 sm:h-10 sm:w-10" />
+                <span className="text-center text-[11px] font-semibold leading-tight text-[#2a2540] sm:text-[12px]">
                   {t('All Categories')}
                 </span>
               </button>
@@ -198,7 +198,7 @@ export function DepartmentsBar({
                   to={`/category/${category.slug}`}
                   aria-expanded={hasChildren ? isOpen : undefined}
                   className={({ isActive }) =>
-                    `group flex w-[108px] shrink-0 flex-col items-center justify-center gap-2 rounded-2xl px-2 py-3 transition-all duration-300 sm:w-[124px] ${
+                    `group flex w-[88px] shrink-0 flex-col items-center justify-center gap-1.5 rounded-2xl px-2 py-2.5 transition-all duration-300 sm:w-[96px] ${
                       isActive || isOpen
                         ? 'bg-[#e9e2f7] shadow-[0_0_0_1px_#c4b5fd,0_8px_24px_-8px_rgba(124,58,237,0.25)]'
                         : 'bg-[#f3f0fa] hover:-translate-y-0.5 hover:bg-[#ebe5f7] hover:shadow-md'
@@ -210,14 +210,14 @@ export function DepartmentsBar({
                       src={assetUrl(category.image)}
                       alt={category.name}
                       loading="lazy"
-                      className="h-12 w-12 rounded-xl object-contain transition-transform duration-300 group-hover:scale-110 sm:h-14 sm:w-14"
+                      className="h-9 w-9 rounded-xl object-contain transition-transform duration-300 group-hover:scale-110 sm:h-10 sm:w-10"
                     />
                   ) : (
-                    <span className="grid h-12 w-12 place-items-center rounded-xl bg-white/60 text-[#5b4a8a] sm:h-14 sm:w-14">
-                      <LayoutGrid className="h-7 w-7 sm:h-8 sm:w-8" />
+                    <span className="grid h-9 w-9 place-items-center rounded-xl bg-white/60 text-[#5b4a8a] sm:h-10 sm:w-10">
+                      <LayoutGrid className="h-5 w-5 sm:h-6 sm:w-6" />
                     </span>
                   )}
-                  <span className="line-clamp-2 text-center text-[13px] font-semibold leading-tight text-[#2a2540] sm:text-[14px]">
+                  <span className="line-clamp-2 text-center text-[11px] font-semibold leading-tight text-[#2a2540] sm:text-[12px]">
                     {category.name}
                   </span>
                 </NavLink>
@@ -230,12 +230,12 @@ export function DepartmentsBar({
             <div className="shrink-0">
               <Link
                 to="/shop"
-                className="group flex w-[108px] shrink-0 flex-col items-center justify-center gap-2 rounded-2xl bg-[#f3f0fa] px-2 py-3 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#ebe5f7] hover:shadow-md sm:w-[124px]"
+                className="group flex w-[88px] shrink-0 flex-col items-center justify-center gap-1.5 rounded-2xl bg-[#f3f0fa] px-2 py-2.5 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#ebe5f7] hover:shadow-md sm:w-[96px]"
               >
-                <span className="grid h-12 w-12 place-items-center rounded-xl bg-white/60 text-[#5b4a8a] sm:h-14 sm:w-14">
-                  <ChevronDown className="h-7 w-7 sm:h-8 sm:w-8" />
+                <span className="grid h-9 w-9 place-items-center rounded-xl bg-white/60 text-[#5b4a8a] sm:h-10 sm:w-10">
+                  <ChevronDown className="h-5 w-5 sm:h-6 sm:w-6" />
                 </span>
-                <span className="text-center text-[13px] font-semibold leading-tight text-[#2a2540] sm:text-[14px]">
+                <span className="text-center text-[11px] font-semibold leading-tight text-[#2a2540] sm:text-[12px]">
                   {t('More')}
                 </span>
               </Link>
@@ -243,28 +243,38 @@ export function DepartmentsBar({
           )}
         </div>
 
-        {/* Right-side pill action buttons */}
-        <div className="hidden shrink-0 items-center gap-3 lg:flex">
+        {/* Right-side action cards (same card style as categories) */}
+        <div className="flex shrink-0 items-center gap-3">
           {settings.show_shop_all && (
             <Link
               to="/shop"
-              className="inline-flex h-9 items-center justify-center rounded-full border border-gold-mid/60 bg-white px-5 text-[11px] font-bold uppercase tracking-[0.12em] text-gold-deep transition-colors hover:border-gold-deep hover:bg-cream"
+              className="group flex w-[88px] shrink-0 flex-col items-center justify-center gap-1.5 rounded-2xl bg-[#f3f0fa] px-2 py-2.5 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#ebe5f7] hover:shadow-md sm:w-[96px]"
             >
-              {t('Shop all')}
+              <span className="grid h-9 w-9 place-items-center rounded-xl bg-white/60 text-[#5b4a8a] transition-transform duration-300 group-hover:scale-110 sm:h-10 sm:w-10">
+                <LayoutGrid className="h-5 w-5 sm:h-6 sm:w-6" />
+              </span>
+              <span className="line-clamp-2 text-center text-[11px] font-semibold leading-tight text-[#2a2540] sm:text-[12px]">
+                {t('Shop all')}
+              </span>
             </Link>
           )}
           {settings.show_collections && (
             <NavLink
               to="/collections"
               className={({ isActive }) =>
-                `inline-flex h-9 items-center justify-center rounded-full border px-5 text-[11px] font-bold uppercase tracking-[0.12em] transition-colors ${
+                `group flex w-[88px] shrink-0 flex-col items-center justify-center gap-1.5 rounded-2xl px-2 py-2.5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md sm:w-[96px] ${
                   isActive
-                    ? 'border-gold-deep bg-cream text-gold-deep'
-                    : 'border-gold-mid/60 bg-white text-gold-deep hover:border-gold-deep hover:bg-cream'
+                    ? 'bg-[#e9e2f7] shadow-[0_0_0_1px_#c4b5fd,0_8px_24px_-8px_rgba(124,58,237,0.25)]'
+                    : 'bg-[#f3f0fa] hover:bg-[#ebe5f7]'
                 }`
               }
             >
-              {t('Collections')}
+              <span className="grid h-9 w-9 place-items-center rounded-xl bg-white/60 text-[#5b4a8a] transition-transform duration-300 group-hover:scale-110 sm:h-10 sm:w-10">
+                <LayoutGrid className="h-5 w-5 sm:h-6 sm:w-6" />
+              </span>
+              <span className="line-clamp-2 text-center text-[11px] font-semibold leading-tight text-[#2a2540] sm:text-[12px]">
+                {t('Collections')}
+              </span>
             </NavLink>
           )}
         </div>
