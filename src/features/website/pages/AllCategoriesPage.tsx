@@ -45,7 +45,7 @@ export function AllCategoriesPage() {
                     <img
                       src={assetUrl(iconSrc)}
                       alt={cat.name}
-                      loading="lazy"
+                      
                       className="h-12 w-12 rounded-xl object-contain transition-transform duration-300 group-hover:scale-110 sm:h-14 sm:w-14"
                     />
                   ) : (

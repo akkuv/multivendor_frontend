@@ -97,7 +97,6 @@ export function ProductCard({
               <img
                 src={assetUrl(image)}
                 alt={product.name}
-                loading="lazy"
                 className={cn(
                   'h-full w-full object-cover transition duration-700 ease-out',
                   isMinimal ? 'group-hover:scale-[1.06]' : 'group-hover:scale-105',
@@ -107,7 +106,6 @@ export function ProductCard({
                 <img
                   src={assetUrl(product.images[1])}
                   alt=""
-                  loading="lazy"
                   className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                 />
               )}

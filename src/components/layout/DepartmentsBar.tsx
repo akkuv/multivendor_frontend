@@ -172,7 +172,7 @@ export function DepartmentsBar({
                 className={cardClass(openPanel === 'shop')}
               >
                 {settings.all_icon ? (
-                  <img src={assetUrl(settings.all_icon)} alt={t('All Categories')} loading="lazy" className={iconImgClass} />
+                  <img src={assetUrl(settings.all_icon)} alt={t('All Categories')} className={iconImgClass} />
                 ) : (
                   <LayoutGrid className="h-9 w-9 text-[#5b4a8a] transition-transform duration-300 group-hover:scale-110 sm:h-10 sm:w-10" />
                 )}
@@ -202,7 +202,7 @@ export function DepartmentsBar({
                     <img
                       src={assetUrl(iconSrc)}
                       alt={category.name}
-                      loading="lazy"
+                     
                       className={iconImgClass}
                     />
                   ) : (
@@ -219,7 +219,7 @@ export function DepartmentsBar({
           {settings.show_shop_all && (
             <Link to="/shop" className={cardClass(false)}>
               {settings.shop_all_icon ? (
-                <img src={assetUrl(settings.shop_all_icon)} alt={t('Shop all')} loading="lazy" className={iconImgClass} />
+                <img src={assetUrl(settings.shop_all_icon)} alt={t('Shop all')} className={iconImgClass} />
               ) : (
                 <span className={iconBoxClass}>
                   <LayoutGrid className="h-5 w-5 transition-transform duration-300 group-hover:scale-110 sm:h-6 sm:w-6" />
@@ -235,7 +235,7 @@ export function DepartmentsBar({
               className={({ isActive }) => `group ${cardClass(isActive).replace('group ', '')}`}
             >
               {settings.collections_icon ? (
-                <img src={assetUrl(settings.collections_icon)} alt={t('Collections')} loading="lazy" className={iconImgClass} />
+                <img src={assetUrl(settings.collections_icon)} alt={t('Collections')} className={iconImgClass} />
               ) : (
                 <span className={iconBoxClass}>
                   <LayoutGrid className="h-5 w-5 transition-transform duration-300 group-hover:scale-110 sm:h-6 sm:w-6" />

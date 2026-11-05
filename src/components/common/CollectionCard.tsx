@@ -70,15 +70,13 @@ export function CollectionCard({ product }: { product: Product }) {
               <img
                 src={assetUrl(image)}
                 alt={product.name}
-                loading="lazy"
-                className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                                className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
               />
               {product.images?.[1] && (
                 <img
                   src={assetUrl(product.images[1])}
                   alt=""
-                  loading="lazy"
-                  className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                                    className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                 />
               )}
             </>
