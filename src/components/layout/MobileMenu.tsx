@@ -174,7 +174,7 @@ export function MobileMenu({
                   >
                     <span className="flex items-center gap-3">
                       {settings.all_icon ? (
-                        <img src={assetUrl(settings.all_icon)} alt="" loading="lazy" className="h-6 w-6 shrink-0 rounded-lg object-contain" />
+                        <img src={assetUrl(settings.all_icon)} alt=""  className="h-6 w-6 shrink-0 rounded-lg object-contain" />
                       ) : (
                         <LayoutGrid className="h-5 w-5 shrink-0 text-[#5b4a8a]" />
                       )}
@@ -223,7 +223,7 @@ export function MobileMenu({
                         className="flex flex-col items-center justify-center gap-1.5 rounded-xl border border-[#e8e4f0] bg-white px-2 py-3 text-center transition-colors hover:bg-[#fafafa]"
                       >
                         {iconSrc ? (
-                          <img src={assetUrl(iconSrc)} alt={category.name} loading="lazy" className="h-9 w-9 rounded-lg object-contain" />
+                          <img src={assetUrl(iconSrc)} alt={category.name}  className="h-9 w-9 rounded-lg object-contain" />
                         ) : (
                           <span className="grid h-9 w-9 place-items-center rounded-lg bg-slate-50 text-[#5b4a8a]">
                             <LayoutGrid className="h-5 w-5" />
@@ -244,7 +244,7 @@ export function MobileMenu({
                     className="flex items-center gap-3 px-4 py-3.5 text-[15px] font-medium text-ink hover:bg-[#fafafa]"
                   >
                     {settings.shop_all_icon ? (
-                      <img src={assetUrl(settings.shop_all_icon)} alt="" loading="lazy" className="h-6 w-6 shrink-0 rounded-lg object-contain" />
+                      <img src={assetUrl(settings.shop_all_icon)} alt=""  className="h-6 w-6 shrink-0 rounded-lg object-contain" />
                     ) : (
                       <LayoutGrid className="h-5 w-5 shrink-0 text-[#5b4a8a]" />
                     )}
@@ -260,7 +260,7 @@ export function MobileMenu({
                     className="flex items-center gap-3 px-4 py-3.5 text-[15px] font-medium text-ink hover:bg-[#fafafa]"
                   >
                     {settings.collections_icon ? (
-                      <img src={assetUrl(settings.collections_icon)} alt="" loading="lazy" className="h-6 w-6 shrink-0 rounded-lg object-contain" />
+                      <img src={assetUrl(settings.collections_icon)} alt=""  className="h-6 w-6 shrink-0 rounded-lg object-contain" />
                     ) : (
                       <LayoutGrid className="h-5 w-5 shrink-0 text-[#5b4a8a]" />
                     )}
@@ -324,7 +324,7 @@ function CategoryRow({
             <img
               src={assetUrl(category.icon || category.image)}
               alt={category.name}
-              loading="lazy"
+              
               className="h-7 w-7 shrink-0 rounded-lg object-contain"
             />
           ) : (
@@ -371,7 +371,7 @@ function CategoryRow({
                   className="flex items-center gap-2 px-6 py-2.5 text-[14px] text-[#444] hover:bg-[#f0f0f0]"
                 >
                   {child.icon || child.image ? (
-                    <img src={assetUrl(child.icon || child.image)} alt={child.name} loading="lazy" className="h-5 w-5 shrink-0 rounded object-contain" />
+                    <img src={assetUrl(child.icon || child.image)} alt={child.name}  className="h-5 w-5 shrink-0 rounded object-contain" />
                   ) : null}
                   {child.name}
                 </Link>

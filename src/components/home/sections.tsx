@@ -398,14 +398,14 @@ export function CompactProductCard({ product }: { product: Product }) {
             <img
               src={assetUrl(image)}
               alt={product.name}
-              loading="lazy"
+              
               className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
             />
             {product.images?.[1] && (
               <img
                 src={assetUrl(product.images[1])}
                 alt={product.name}
-                loading="lazy"
+                
                 className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"
               />
             )}
@@ -599,7 +599,7 @@ export function CategoryRing({
                     <img
                       src={assetUrl(category.image)}
                       alt={label}
-                      loading="lazy"
+                      
                       className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                     />
                   ) : (
@@ -692,7 +692,7 @@ export function SubcategoryGrid({
           const body = (
             <>
               {category.image ? (
-                <img src={assetUrl(category.image)} alt={category.title || ''} loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <img src={assetUrl(category.image)} alt={category.title || ''}  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
               ) : (
                 <div className={`flex h-full w-full items-center justify-center bg-gradient-to-br ${categoryGradients[index % categoryGradients.length]}`}>
                   <span className="text-4xl font-extrabold text-gold-deep">{label.charAt(0)}</span>
@@ -838,7 +838,7 @@ export function TestimonialsSection({
                 <div className="relative md:w-[34%] md:shrink-0">
                   {photo ? (
                     <div className="aspect-[3/4] overflow-hidden bg-muted">
-                      <img src={assetUrl(photo)} alt={testimonial.author_name} loading="lazy" className="h-full w-full object-cover" />
+                      <img src={assetUrl(photo)} alt={testimonial.author_name}  className="h-full w-full object-cover" />
                     </div>
                   ) : (
                     <div className="grid aspect-[3/4] place-items-center bg-cream">
@@ -1033,7 +1033,7 @@ export function DepartmentNavStrip({ categories }: { categories: Category[] }) {
                   <img
                     src={assetUrl(category.image)}
                     alt={category.name}
-                    loading="lazy"
+                    
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 ) : (
@@ -1271,7 +1271,7 @@ export function MiniBannerGrid({
                   <img
                     src={assetUrl(item.image)}
                     alt={item.title}
-                    loading="lazy"
+                    
                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 ) : (
@@ -1535,7 +1535,7 @@ export function BestSellersStrip({
                   <img
                     src={assetUrl(product.images[0])}
                     alt={product.name}
-                    loading="lazy"
+                    
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                   />
                 ) : (
@@ -1920,7 +1920,7 @@ export function TrendingStyles({
                     <img
                       src={assetUrl(item.image)}
                       alt={item.title ?? ''}
-                      loading="lazy"
+                      
                       className={cn(
                         'absolute inset-0 h-full w-full object-cover transition-opacity duration-200',
                         hasVideo && index === mobileActive ? 'opacity-0' : 'opacity-100',
@@ -2014,7 +2014,7 @@ export function TrendingStyles({
                       <img
                         src={assetUrl(item.image)}
                         alt={item.title ?? ''}
-                        loading="lazy"
+                        
                         className={cn(
                           'absolute inset-0 h-full w-full object-cover transition-opacity duration-200',
                           hasVideo && isActive ? 'opacity-0' : 'opacity-100',
@@ -2200,7 +2200,7 @@ export function EditorsPicks({
                 <img
                   src={assetUrl(item.image)}
                   alt={item.title}
-                  loading="lazy"
+                  
                   className="block w-full transition-transform duration-700 group-hover:scale-105"
                 />
               ) : (
@@ -2343,7 +2343,7 @@ export function SplitCollage({
           <img
             src={assetUrl(tallImage)}
             alt={content.heading || title || ''}
-            loading="lazy"
+            
             className="h-full w-full object-cover"
           />
         ) : (
@@ -2355,14 +2355,14 @@ export function SplitCollage({
       <div className="flex flex-col gap-2 sm:gap-3">
         <div className="aspect-[267/175] overflow-hidden rounded-2xl bg-cream ring-1 ring-line-warm/60">
           {wideImage && (
-            <img src={assetUrl(wideImage)} alt="" loading="lazy" className="h-full w-full object-cover" />
+            <img src={assetUrl(wideImage)} alt=""  className="h-full w-full object-cover" />
           )}
         </div>
         <div className="grid flex-1 grid-cols-2 gap-2 sm:gap-3">
           {[0, 1].map((i) => (
             <div key={i} className="overflow-hidden rounded-2xl bg-cream ring-1 ring-line-warm/60">
               {smallImages[i] && (
-                <img src={assetUrl(smallImages[i])} alt="" loading="lazy" className="h-full w-full object-cover" />
+                <img src={assetUrl(smallImages[i])} alt=""  className="h-full w-full object-cover" />
               )}
             </div>
           ))}
@@ -2449,7 +2449,7 @@ export function ImageBanner({
       {/* ditto KALKI `.Index_middle_banner_infos_innerboxs_videoimage_new img`: plain full-width, no radius */}
       <picture>
         {mobileImage && <source media="(max-width: 749px)" srcSet={assetUrl(mobileImage)} />}
-        <img src={assetUrl(image)} alt={alt} loading="lazy" className="block h-auto w-full rounded-2xl" />
+        <img src={assetUrl(image)} alt={alt}  className="block h-auto w-full rounded-2xl" />
       </picture>
     </>
   )
@@ -2520,7 +2520,7 @@ export function TextBanner({
           <img
             src={assetUrl(image)}
             alt={alt}
-            loading="lazy"
+            
             className="absolute inset-0 h-full w-full object-cover"
           />
         ) : (
@@ -2812,7 +2812,7 @@ export function ProductCarousel({
                       <img
                         src={assetUrl(cardImage)}
                         alt={cardTitle || t('Product')}
-                        loading="lazy"
+                        
                         className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                       />
                     </span>
@@ -2897,7 +2897,7 @@ export function InstagramDiaries({ content }: { content: HomeInstagramDiariesCon
                 <img
                   src={assetUrl(poster)}
                   alt={item.caption || ''}
-                  loading="lazy"
+                  
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
                 />
               ) : (
@@ -3053,7 +3053,7 @@ function StoreCard({ item }: { item: HomeStoreLocationItem }) {
       <img
         src={assetUrl(item.image)}
         alt={name}
-        loading="lazy"
+        
         className="absolute inset-0 block h-full w-full object-cover"
       />
       <div className="absolute inset-x-0 bottom-0 bg-black/50 pb-5 text-center">
