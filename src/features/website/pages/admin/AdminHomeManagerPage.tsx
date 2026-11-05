@@ -300,7 +300,7 @@ function ValuePropsItemsEditor({
           </div>
           <ImageField
             label={t('Icon image')}
-            value={item.image ?? ''}
+            initialValue={item.image ?? ''}
             onChange={(v) => updateItem(index, { image: v || null })}
             placeholder={t('https://...icon.png')}
           />
@@ -312,7 +312,7 @@ function ValuePropsItemsEditor({
         type="button"
         variant="outline"
         size="sm"
-        onClick={() => onChange([...items, { icon: '', image: null, title: '', description: '' }])}
+        onClick={() => onChange([...items, { icon: '', image: '', title: '', description: '' }])}
       >
         <Plus className="h-4 w-4" />
         {t('Add Item')}
