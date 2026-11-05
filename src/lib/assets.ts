@@ -4,7 +4,12 @@
  * instead of the frontend origin.
  */
 function resolveOrigin(): string {
-  const configured = import.meta.env.VITE_ASSET_BASE_URL
+  // Prefer the API base URL origin so relative image paths resolve to the same
+  // backend that serves the API, even before the runtime asset_base is known.
+  const apiBase = import.meta.env.VITE_API_BASE_URL
+  const configured = apiBase && !apiBase.startsWith('/')
+    ? (() => { try { return new URL(apiBase).origin } catch { return null } })()
+    : import.meta.env.VITE_ASSET_BASE_URL
   if (configured) {
     try {
       const url = new URL(configured)
