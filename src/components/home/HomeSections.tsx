@@ -109,9 +109,16 @@ function renderSectionNode(
             )
           }
           case 'VALUE_PROPS': {
-            const items = (section.content as { items?: HomeValueProp[] } | undefined)?.items ?? []
-            if (items.length > 0) {
-              return <ValuePropsSection key={section.id} items={items} />
+            const contentItems = (section.content as { items?: HomeValueProp[] } | undefined)?.items ?? []
+            const configItems = (section.config as { items?: HomeValueProp[] } | undefined)?.items ?? []
+            // Merge icon image from config when the resolved content omits it (older backends).
+            const items = contentItems.map((ci, i) => ({
+              ...ci,
+              image: ci.image ?? configItems[i]?.image ?? null,
+            }))
+            const final = items.length > 0 ? items : configItems
+            if (final.length > 0) {
+              return <ValuePropsSection key={section.id} items={final} />
             }
             return null
           }

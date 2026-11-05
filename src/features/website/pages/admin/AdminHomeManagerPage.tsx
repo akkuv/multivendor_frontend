@@ -300,8 +300,8 @@ function ValuePropsItemsEditor({
           </div>
           <ImageField
             label={t('Icon image')}
-            value={item.icon_image ?? ''}
-            onChange={(v) => updateItem(index, { icon_image: v || null })}
+            value={item.image ?? ''}
+            onChange={(v) => updateItem(index, { image: v || null })}
             placeholder={t('https://...icon.png')}
           />
           <Input value={item.title} onChange={(e) => updateItem(index, { title: e.target.value })} placeholder={t('Title e.g. Curated selection')} />
@@ -312,7 +312,7 @@ function ValuePropsItemsEditor({
         type="button"
         variant="outline"
         size="sm"
-        onClick={() => onChange([...items, { icon: '', icon_image: null, title: '', description: '' }])}
+        onClick={() => onChange([...items, { icon: '', image: null, title: '', description: '' }])}
       >
         <Plus className="h-4 w-4" />
         {t('Add Item')}
@@ -1929,7 +1929,7 @@ export function AdminHomeManagerPage({
       Array.isArray(config.items)
         ? (config.items as HomeValueProp[]).map((item) => ({
             icon: String(item.icon ?? 'gem'),
-            icon_image: item.icon_image ? String(item.icon_image) : null,
+            image: item.image ? String(item.image) : null,
             title: String(item.title ?? ''),
             description: String(item.description ?? ''),
           }))
